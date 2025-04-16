@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
+import { Provider } from "react-redux"; //
 import { store } from "./app/store";
 import App from "./app/App";
 import reportWebVitals from "./reportWebVitals";
@@ -9,6 +9,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "./app/MaterialTheme";
 import "./css/index.css";
 
+// Global integration: REDUX | ROUTER | MUI | CONTExT | Bootstrap | WebSocket | GraphQL
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
