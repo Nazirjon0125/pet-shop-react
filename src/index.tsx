@@ -8,6 +8,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./app/MaterialTheme";
 import "./css/index.css";
+import { BrowserRouter as Router } from "react-router-dom";
 
 // Global integration: REDUX | ROUTER | MUI | CONTExT | Bootstrap | WebSocket | GraphQL
 ReactDOM.render(
@@ -15,7 +16,9 @@ ReactDOM.render(
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <App />
+        <Router>
+          <App />
+        </Router>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>,
