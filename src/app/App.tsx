@@ -13,7 +13,6 @@ import { Footer } from "./components/footer";
 
 function App() {
   const location = useLocation();
-  console.log("location:", location);
 
   return (
     <>
