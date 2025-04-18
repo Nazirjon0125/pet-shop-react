@@ -1,14 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Provider } from "react-redux"; //
+import { Provider } from "react-redux"; // bunker
 import { store } from "./app/store";
 import App from "./app/App";
 import reportWebVitals from "./reportWebVitals";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./app/MaterialTheme";
-import "./css/index.css";
 import { BrowserRouter as Router } from "react-router-dom";
+import "./css/index.css";
 
 // Global integration: REDUX | ROUTER | MUI | CONTExT | Bootstrap | WebSocket | GraphQL
 ReactDOM.render(
