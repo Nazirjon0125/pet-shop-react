@@ -12,7 +12,6 @@ export default function Events() {
         <Box className={"events-text"}>
           <span className={"category-title"}>Events</span>
         </Box>
-
         <Swiper
           className={"events-info swiper-wrapper"}
           slidesPerView={"auto"}

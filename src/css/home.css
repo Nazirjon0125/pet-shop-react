@@ -249,12 +249,12 @@
   width: 100%;
   height: auto;
   display: flex;
+  margin-bottom: 92px;
 }
 
 .homepage .active-users-frame .main {
   width: 100%;
-  height: auto;
-  margin-bottom: 56px;
+  height: 550px;
 }
 
 .homepage .active-users-frame .category-title {
@@ -287,8 +287,10 @@
 
 .homepage .cards-frame .card {
   width: 305px;
-  height: 302.25px;
-  /* background: rgb(255, 255, 255); */
+  height: 302.26px;
+  border-radius: 12px;
+
+  background: rgb(255, 255, 255);
 }
 
 .homepage .cards-frame .member-nickname {
