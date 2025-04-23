@@ -249,7 +249,6 @@
   width: 100%;
   height: auto;
   display: flex;
-  margin-bottom: 92px;
 }
 
 .homepage .active-users-frame .main {
@@ -258,7 +257,7 @@
 }
 
 .homepage .active-users-frame .category-title {
-  margin-top: 93px;
+  margin-top: 45px;
   width: 214px;
   height: 31.71px;
 
@@ -287,10 +286,10 @@
 
 .homepage .cards-frame .card {
   width: 305px;
-  height: 302.26px;
+  height: 340px;
+  background-color: rgb(255, 255, 255);
   border-radius: 12px;
-
-  background: rgb(255, 255, 255);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .homepage .cards-frame .member-nickname {
@@ -306,8 +305,6 @@
   font-weight: 600;
   line-height: 14px;
   text-align: center;
-  /* 
-  background: rgba(255, 255, 255); */
 }
 
 .homepage .cards-frame .no-data {
