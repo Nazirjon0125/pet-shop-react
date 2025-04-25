@@ -33,9 +33,16 @@ export default function Products() {
       <Container>
         <Stack flexDirection={"column"} alignItems={"center"}>
           <Stack className={"avatar-big-box"}>
-            <Stack className="top-text">
-              <p>Burak Restaurant</p>
-              <div className="single-search-big-box">search</div>
+            <Stack className="top-text">Burak Restaurant</Stack>
+            <Stack className="single-search-big-box">
+              <form className="single-search-form">
+                <input
+                  className="single-search-input"
+                  type="text"
+                  placeholder="qidiruv"
+                />
+                <button className="single-button-search">Search</button>
+              </form>
             </Stack>
           </Stack>
 
@@ -80,7 +87,7 @@ export default function Products() {
                 <Button variant={"contained"} color={"secondary"}>
                   Salad
                 </Button>
-                <Button variant={"contained"} color={"secondary"}>
+                <Button variant={"contained"} color={"primary"}>
                   Dish
                 </Button>
               </div>
@@ -148,30 +155,43 @@ export default function Products() {
             />
           </Stack>
         </Stack>
-
-        <div className={"brands-logo"}>
-          <Container>
-            <Stack>
-              <div className="title-name">Our Family Brands</div>
-            </Stack>
-          </Container>
-        </div>
-
-        <div className={"address"}>
-          <Container>
-            <Stack className={"address-area"}>
-              <Box className={"title"}>Our address</Box>
-              <iframe
-                style={{ marginTop: "60px" }}
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d101071.40356479149!2d126.83221725000001!3d37.66139555!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c908309d05a09%3A0xd0a0d71a3c16ef7f!2sGoyang-si%2C%20Gyeonggi-do!5e0!3m2!1suz!2skr!4v1745384774657!5m2!1suz!2skr"
-                width={"1320"}
-                height={"500"}
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </Stack>
-          </Container>
-        </div>
       </Container>
+      <div className={"brands-logo"}>
+        <Container>
+          <Stack className="family-brands">
+            <Box className="brand-title">Our Family Brands</Box>
+            <Stack className="brand-cards">
+              <Box className="brand-card">
+                <img src={"/img/burak.jpeg"} />
+              </Box>
+              <Box className="brand-card">
+                <img src={"/img/burak.jpeg"} />
+              </Box>
+              <Box className="brand-card">
+                <img src={"/img/burak.jpeg"} />
+              </Box>
+              <Box className="brand-card">
+                <img src={"/img/burak.jpeg"} />
+              </Box>
+            </Stack>
+          </Stack>
+        </Container>
+      </div>
+
+      <div className={"address"}>
+        <Container>
+          <Stack className={"address-area"}>
+            <Box className={"title"}>Our address</Box>
+            <iframe
+              style={{ marginTop: "60px" }}
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d101071.40356479149!2d126.83221725000001!3d37.66139555!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357c908309d05a09%3A0xd0a0d71a3c16ef7f!2sGoyang-si%2C%20Gyeonggi-do!5e0!3m2!1suz!2skr!4v1745384774657!5m2!1suz!2skr"
+              width={"1320"}
+              height={"500"}
+              referrerPolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </Stack>
+        </Container>
+      </div>
     </div>
   );
 }

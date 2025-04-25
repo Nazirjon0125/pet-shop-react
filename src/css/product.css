@@ -18,10 +18,11 @@
 
 .products-page .products .avatar-big-box {
   position: relative;
+  margin-top: 80px;
   width: 100%;
   height: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
 }
 
@@ -29,15 +30,11 @@
   position: relative;
   width: 100%;
   height: 43px;
-  margin-top: 80px;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-}
 
-.products-page .products .top-text p {
-  position: relative;
   margin-left: 380px;
   font-family: "Dancing Script";
   font-style: normal;
@@ -49,20 +46,99 @@
 
 .products-page .products .single-search-big-box {
   position: relative;
-  width: 364px;
-  height: 32px;
+  width: 337px;
+  height: 33px;
   display: flex;
-  background: #bb3030;
+  flex-direction: row;
+  align-items: center;
+  background: #fffcfc;
+  border: 1px solid #f8f8ff;
+  box-shadow: 0px 4px 4px rgba(213, 213, 213, 0.25);
+  border-radius: 18.5px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.products-page .products .single-search-form {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.products-page .products .single-search-input {
+  position: relative;
+  width: 225px;
+  height: 30px;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding-left: 10px;
+  display: flex;
+  border: none;
+  border-radius: 10px 0px 0px 10px;
+}
+
+.products-page .products .single-button-search {
+  position: relative;
+  width: 100px;
+  height: 33px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #d7b586;
+  display: flex;
+  border-radius: 18px;
+  background: #343434;
+}
+
+.products-page .products .prev-btn,
+.products .next-btn {
+  width: 10%;
+  height: 147px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.products-page .products .restaurant-avatars-wrapper {
+  width: 90%;
+  height: 147px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+}
+
+.products-page .products .restaurant-avatars img {
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+}
+
+.products-page .products .restaurant-avatars span {
+  margin-top: 14px;
+  font-family: "Solway";
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px;
+  color: #fffcfc;
 }
 
 .products-page .products .dishes-filter-section {
-  margin-bottom: 200px;
-  width: 250px;
+  margin-top: 65px;
+  width: 100%;
   height: 36.5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
 }
 
 .products-page .products .dishes-filter-section .dishes-filter-box {
-  width: 100%;
+  width: 245px;
   height: 36.5px;
   display: flex;
   flex-direction: row;
@@ -75,18 +151,222 @@
 }
 
 .products-page .products .list-category-section {
+  position: relative;
   width: 100%;
   height: auto;
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.products-page .products .list-category-section .product-category {
+.products-page .products .product-category {
+  position: relative;
   width: 36px;
-  height: 389px;
+  height: 500px;
+  display: flex;
+  flex-direction: row;
+}
+
+.products-page .products .product-category .category-main {
+  position: relative;
+  margin-top: 200px;
+  width: 100%;
+  height: 76px;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+
+  font-family: "Solway";
+  font-style: normal;
+  font-weight: 400;
+  line-height: 14px;
+  gap: 10px;
+  transform: rotate(-90deg);
+}
+
+.products-page .products .product-wrapper {
+  margin-left: 25px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.products-page .product-wrapper .no-data {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: capitalize;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 34px;
+  color: #e3c08d;
+}
+
+.products-page .products .product-card {
+  margin-top: 40px;
+  margin-right: 24px;
+  width: 270px;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.products-page .products .product-card .product-img {
+  position: relative;
+  width: 273px;
+  height: 275px;
+  background-size: cover;
+  border-radius: 0px 50px 0px 0px;
+}
+
+.products-page .products .product-card .product-img .product-sale {
+  position: absolute;
+  margin: 10px 0 0 10px;
+  z-index: 100;
+  width: 90px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ff9200;
+  box-shadow: 4px 6px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 21px;
+  color: #f8f8ff;
+}
+
+.products .product-wrapper .product-card .product-desc {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: rgb(227, 192, 141);
+  font-family: Poppins;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 36px;
+}
+
+.products .product-wrapper .product-card .view-btn {
+  position: absolute;
+  width: 64px;
+  height: 46px;
+  top: 220px;
+}
+
+.products .product-wrapper .product-card .shop-btn {
+  position: absolute;
+  width: 64px;
+  height: 46px;
+  top: 220px;
+  padding-left: 150px;
+}
+
+.products-page .products .pagination-section {
+  position: relative;
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.products-page .products .brands-logo {
+  margin-top: 60px;
+  width: 100%;
+  height: 630px;
+  display: flex;
+
+  background: #0d1518;
+}
+
+.products-page .products .brands-logo .family-brands {
+  padding-top: 70px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
+
+.products-page .products .brands-logo .family-brands .brand-title {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+
+  font-family: "Roboto";
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 42px;
+  text-align: left;
+  color: rgb(227, 192, 141);
+}
+
+.products-page .brands-logo .family-brands .brand-cards {
+  margin-top: 50px;
+  width: 1294px;
+  height: 350px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.products-page .brands-logo .family-brands .brand-cards .brand-card {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+
+  box-shadow: 0px 0px 22px 0px rgb(228, 212, 212);
+  background: rgb(13, 21, 24);
+}
+
+.products-page .brands-logo .family-brands .brand-cards .brand-card img {
+  width: 258px;
+  height: 350px;
+}
+
+.products-page .address {
+  margin-top: 20px;
+  width: 100%;
+  height: 701px;
+  display: flex;
+}
+
+.products-page .address .address-area {
+  width: 1300px;
+  height: 567px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.products-page .address .address-area .title {
+  width: 232px;
+  height: 54px;
+
+  font-family: "Roboto Serif";
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 42px;
+  text-align: left;
+  color: rgb(52, 52, 52);
+}
+
+/*
+
 
 .products-page .products .list-category-section .category-main {
   width: 36px;
@@ -103,13 +383,6 @@
   flex-direction: row;
   justify-content: space-between;
   flex-wrap: wrap;
-}
-
-.products-page .products .product-wrapper .product-card {
-  width: 273px;
-  height: 365px;
-
-  cursor: pointer;
 }
 
 .products-page .products .product-wrapper .product-card .product-img {
@@ -141,17 +414,7 @@
   color: #f8f8ff;
 }
 
-.products-page .products .brands-logo {
-  position: relative;
-  width: 1913px;
-  height: 630px;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #9eceb7;
-}
 
 .products-page .products .brands-logo .title-name {
   position: relative;
@@ -165,7 +428,7 @@
   line-height: 42px;
   text-align: left;
   color: rgb(227, 192, 141);
-}
+} */
 
 /** ChosenProduct **/
 
