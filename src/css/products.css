@@ -433,6 +433,7 @@
 }
 
 .products-page .chosen-product .info-box .product-price {
+  position: relative;
   margin-top: 20px;
   margin-bottom: 20px;
   width: 100%;
