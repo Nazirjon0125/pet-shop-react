@@ -10,7 +10,7 @@ import theme from "./app/MaterialTheme";
 import { BrowserRouter as Router } from "react-router-dom";
 import "./css/index.css";
 
-// Global integration: REDUX | ROUTER | MUI | CONTExT | Bootstrap | WebSocket | GraphQL
+// Global integration: REDUX | MUI | ROUTER | CONTExT | SocketID| Bootstrap | WebSocket | GraphQL
 const container = document.getElementById("root")!;
 const root = createRoot(container);
 
