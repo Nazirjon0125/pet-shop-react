@@ -11,6 +11,7 @@ import HelpPage from "./screens/helpPage";
 import HomeNavbar from "./components/header/HomeNavbar";
 import OtherNavbar from "./components/header/OtherNavbar";
 import Footer from "./components/footer";
+import Test from "./screens/Test";
 
 import "../css/app.css";
 import "../css/navbar.css";
@@ -27,7 +28,7 @@ function App() {
         <Route path="/orders" element={<OrdersPage />}></Route>
         <Route path="/member-page" element={<UserPage />}></Route>
         <Route path="/help" element={<HelpPage />}></Route>
-        <Route path="/" element={<HomePage />}></Route>
+        <Route path="/" element={<Test />}></Route>
       </Routes>
       <Footer />
     </>
