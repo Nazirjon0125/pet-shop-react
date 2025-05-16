@@ -1,3 +1,4 @@
+/*  REDUX STORE orqali yuklangan oxirgi ma'lumotni qabul qilish*/
 import { createSelector } from "reselect";
 import { AppRootState } from "../../../lib/types/screen";
 
