@@ -13,7 +13,7 @@ const homePageSlice = createSlice({
   initialState,
   reducers: {
     setPopularDishes: (state, action) => {
-      state.popularDishes = action.payload;
+      state.popularDishes = action.payload; // backend data
     },
     setNewDishes: (state, action) => {
       state.newDishes = action.payload;
