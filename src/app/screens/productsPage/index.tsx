@@ -9,7 +9,7 @@ export default function ProductsPage() {
   return (
     <div className="products-page">
       <Routes>
-        <Route path=":productsId" element={<ChosenProduct />} />
+        <Route path=":productId" element={<ChosenProduct />} />
         <Route path="" element={<Products />} />
       </Routes>
     </div>
