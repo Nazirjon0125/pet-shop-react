@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Button, Container, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
@@ -15,6 +15,9 @@ import { setProducts } from "./slice";
 import { createSelector } from "reselect";
 import { retrieveProducts } from "./selector";
 import { Product } from "../../../lib/types/product";
+import ProductService from "../../services/ProductService";
+import { ProductCollection } from "../../../lib/enums/product.enum";
+import { serverApi } from "../../../lib/config";
 
 /* REDUX SLICE & SELECTOR */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -24,73 +27,23 @@ const productsRetriever = createSelector(retrieveProducts, (products) => ({
   products,
 }));
 
-const products = [
-  {
-    productName: "Cutlet",
-    imagePath: "/img/cutlet.webp",
-    productViews: 100,
-    productPrice: 12,
-  },
-  {
-    productName: "Kebab",
-    imagePath: "/img/kebab.webp",
-    productViews: 200,
-    productPrice: 15,
-  },
-  {
-    productName: "Kebab",
-    imagePath: "/img/kebab-fresh.webp",
-    productViews: 200,
-    productPrice: 15,
-  },
-  {
-    productName: "Lavash",
-    imagePath: "/img/lavash.webp",
-    productViews: 100,
-    productPrice: 17,
-  },
-  {
-    productName: "lavash",
-    imagePath: "/img/lavash.webp",
-    productViews: 200,
-    productPrice: 17,
-  },
-  {
-    productName: "Cutlet",
-    imagePath: "/img/cutlet.webp",
-    productViews: 100,
-    productPrice: 12,
-  },
-  {
-    productName: "Kebab",
-    imagePath: "/img/kebab-fresh.webp",
-    productViews: 200,
-    productPrice: 15,
-  },
-  {
-    productName: "Kebab",
-    imagePath: "/img/kebab.webp",
-    productViews: 100,
-    productPrice: 15,
-  },
-];
-
 export default function Products() {
-  function setSearchText(value: string): void {
-    throw new Error("Function not implemented.");
-  }
+  const { setProducts } = actionDispatch(useDispatch());
+  const { products } = useSelector(productsRetriever);
 
-  function searchProductHandler() {
-    throw new Error("Function not implemented.");
-  }
-
-  function searchCollectionHandler(DISH: any): void {
-    throw new Error("Function not implemented.");
-  }
-
-  function handleSort(arg0: string): void {
-    throw new Error("Function not implemented.");
-  }
+  useEffect(() => {
+    const product = new ProductService();
+    product
+      .getProducts({
+        page: 1,
+        limit: 8,
+        order: "createAt",
+        productCollection: ProductCollection.DISH,
+        search: "",
+      })
+      .then((data) => setProducts(data))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className={"products"}>
@@ -103,18 +56,12 @@ export default function Products() {
                 <input
                   className="single-search-input"
                   placeholder="Type here"
-                  // value={searchText}
-                  type="text"
-                  onChange={(e) => setSearchText(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") searchProductHandler();
-                  }}
+                  value={""}
                 />
                 <Button
                   variant="contained"
                   color="primary"
                   className="single-button-search"
-                  onClick={searchProductHandler}
                 >
                   Search
                   <SearchIcon />
@@ -128,7 +75,6 @@ export default function Products() {
                 variant={"contained"}
                 color={"primary"}
                 className={"order"}
-                onClick={() => handleSort("new")}
               >
                 New
               </Button>
@@ -136,7 +82,6 @@ export default function Products() {
                 variant={"contained"}
                 color={"secondary"}
                 className={"order"}
-                onClick={() => handleSort("price")}
               >
                 Price
               </Button>
@@ -144,7 +89,6 @@ export default function Products() {
                 variant={"contained"}
                 color={"secondary"}
                 className={"order"}
-                onClick={() => handleSort("views")}
               >
                 Views
               </Button>
@@ -175,19 +119,24 @@ export default function Products() {
           </Stack>
           <Stack className={"product-wrapper"}>
             {products.length !== 0 ? (
-              products.map((product, index) => {
+              products.map((product: Product) => {
+                const imagePath = `${serverApi}/${product.productImages[0]}`;
+                const sizeVolume =
+                  product.productCollection === ProductCollection.DRINK
+                    ? product.productVolume + " liter"
+                    : product.productSize + " size";
                 return (
-                  <Stack key={index} className={"product-card"}>
+                  <Stack key={product._id} className={"product-card"}>
                     <Stack
                       className={"product-img"}
                       sx={{
-                        backgroundImage: `url(${product.imagePath})`,
+                        backgroundImage: `url(${imagePath})`,
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "center",
                         backgroundSize: "cover",
                       }}
                     >
-                      <div className={"product-sale"}>Normal size</div>
+                      <div className={"product-sale"}>{sizeVolume}</div>
                       <Button className={"shop-btn"}>
                         <img
                           src={"/icon/shopping-cart.svg"}
@@ -196,7 +145,10 @@ export default function Products() {
                         />
                       </Button>
                       <Button className={"view-btn"} sx={{ right: "36px" }}>
-                        <Badge badgeContent={30} color="secondary">
+                        <Badge
+                          badgeContent={product.productViews}
+                          color="secondary"
+                        >
                           <RemoveRedEyeIcon
                             sx={{
                               color:
