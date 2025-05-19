@@ -32,16 +32,17 @@ export default function HomePage() {
   useEffect(() => {
     // Backend server data request => Data
     const product = new ProductService();
-
+    //CALL
     product
       .getProducts({
         page: 1,
         limit: 4,
         order: "productViews",
-        // productCollection: ProductCollection.DISH,
+        productCollection: ProductCollection.DISH,
       })
       .then((data) => {
         console.log("data passed here", data);
+        // BACKEND DATA FETCH=> data
         setPopularDishes(data);
       })
       .catch((err) => console.log(err));
@@ -51,7 +52,7 @@ export default function HomePage() {
         page: 1,
         limit: 4,
         order: "createdAt",
-        productCollection: ProductCollection.DISH,
+        // productCollection: ProductCollection.DISH,
       })
       .then((data) => {
         console.log("data passed here", data);

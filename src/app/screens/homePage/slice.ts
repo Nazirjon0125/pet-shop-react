@@ -1,7 +1,6 @@
 /* REDUX STORE ga ma'lumot yuklash */
 import { createSlice } from "@reduxjs/toolkit";
 import { HomePageState } from "../../../lib/types/screen";
-import NewDishes from "./NewDishes";
 
 const initialState: HomePageState = {
   popularDishes: [],
