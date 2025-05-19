@@ -309,8 +309,8 @@
 }
 
 .homepage .cards-frame .no-data {
-  width: 100%;
-  height: 300px;
+  width: 1190px;
+  height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;

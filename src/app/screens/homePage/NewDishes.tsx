@@ -32,7 +32,7 @@ export default function NewDishes() {
           <Stack className="card-frame">
             <CssVarsProvider>
               {newDishes.length !== 0 ? (
-                newDishes.map((product, index) => {
+                newDishes.map((product: Product) => {
                   const imagePath = `${serverApi}/${product.productImages[0]}`;
                   const sizeVolume =
                     product.productCollection === ProductCollection.DRINK
