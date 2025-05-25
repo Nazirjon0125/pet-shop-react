@@ -8,7 +8,10 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useNavigate } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
-import { serverApi } from "../../../lib/config";
+import { Message, serverApi } from "../../../lib/config";
+import OrderService from "../../services/OrderService";
+import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import { useGlobals } from "../../hooks/useGlobals";
 
 interface BasketProps {
   cartItems: CartItem[];
@@ -20,7 +23,7 @@ interface BasketProps {
 
 export default function Basket(props: BasketProps) {
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
-  const authMember = null;
+  const authMember = useGlobals();
   const history = useNavigate();
   const itemsPrice: number = cartItems.reduce(
     (a: number, c: CartItem) => a + c.quantity * c.price,
@@ -38,6 +41,23 @@ export default function Basket(props: BasketProps) {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const proceedOrderHandler = async () => {
+    try {
+      handleClose();
+      if (!authMember) throw new Error(Message.error2);
+
+      const order = new OrderService();
+      await order.createOrder(cartItems);
+
+      onDeleteAll();
+      // Refresh via context
+      history("/order");
+    } catch (err) {
+      console.log("Error, createOrder", err);
+      sweetErrorHandling(err).then();
+    }
   };
 
   return (
@@ -145,7 +165,11 @@ export default function Basket(props: BasketProps) {
               <span className={"price"}>
                 Total: ${totalPrice} ({itemsPrice} + {shippingCost} "price")
               </span>
-              <Button startIcon={<ShoppingCartIcon />} variant={"contained"}>
+              <Button
+                onClick={proceedOrderHandler}
+                startIcon={<ShoppingCartIcon />}
+                variant={"contained"}
+              >
                 Order
               </Button>
             </Box>
