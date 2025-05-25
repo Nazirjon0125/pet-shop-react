@@ -10,15 +10,14 @@ import OtherNavbar from "./components/header/OtherNavbar";
 import Footer from "./components/footer";
 import useBasket from "./hooks/useBasket";
 import AuthenticationModal from "./components/auth";
-import Test from "./screens/Test";
-import "../css/app.css";
-import "../css/navbar.css";
-import "../css/footer.css";
 import { T } from "../lib/types/common";
 import { sweetErrorHandling, sweetTopSuccessAlert } from "../lib/sweetAlert";
 import { Message } from "../lib/config";
 import MemberService from "./services/MemberService";
 import { useGlobals } from "./hooks/useGlobals";
+import "../css/app.css";
+import "../css/navbar.css";
+import "../css/footer.css";
 
 function App() {
   const location = useLocation();
