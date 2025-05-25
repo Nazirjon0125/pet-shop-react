@@ -23,7 +23,7 @@ const useBasket = () => {
     } else {
       const cartUpdate = [...cartItems, { ...input }];
       setCartItems(cartUpdate);
-      localStorage.setItem("cartData", JSON.stringify(cartUpdate));
+      // localStorage.setItem("cartData", JSON.stringify(cartUpdate));
     }
   };
 

@@ -1,4 +1,5 @@
 import { Member } from "./member";
+import { Order } from "./order";
 import { Product } from "./product";
 
 /* REACT APP STATE */
@@ -6,6 +7,7 @@ import { Product } from "./product";
 export interface AppRootState {
   homePage: HomePageState;
   productPage: ProductPageState;
+  ordersPage: OrdersPageState;
 }
 
 /* HOME PAGE */
@@ -23,3 +25,8 @@ export interface ProductPageState {
 }
 
 /* ORDERS PAGE */
+export interface OrdersPageState {
+  pausedOrders: Order[];
+  processOrders: Order[];
+  finishedOrders: Order[];
+}

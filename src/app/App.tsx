@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import HomePage from "./screens/homePage";
 import UserPage from "./screens/userPage";
-import OrdersPage from "./screens/orders";
+import OrdersPage from "./screens/ordersPage";
 import ProductsPage from "./screens/productsPage";
 import HelpPage from "./screens/helpPage";
 import HomeNavbar from "./components/header/HomeNavbar";
