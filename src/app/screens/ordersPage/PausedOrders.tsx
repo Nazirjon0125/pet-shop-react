@@ -2,21 +2,21 @@ import React from "react";
 import { Box, Stack } from "@mui/material";
 import Button from "@mui/material/Button";
 import TabPanel from "@mui/lab/TabPanel";
-
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { Message, serverApi } from "../../../lib/config";
 import { retrievePausedOrders } from "./selector";
+import { Message, serverApi } from "../../../lib/config";
 import { Order, OrderItem, OrderUpdateInput } from "../../../lib/types/order";
 import { Product } from "../../../lib/types/product";
-import { T } from "../../../lib/types/common";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
-import { useGlobals } from "../../hooks/useGlobals";
 import { OrderStatus } from "../../../lib/enums/order.enum";
+import { useGlobals } from "../../hooks/useGlobals";
 import OrderService from "../../services/OrderService";
+import { T } from "../../../lib/types/common";
 
-/* REDUX SELECTOR */
-const pausedOrdersRetriever = createSelector(
+/** REDUX SLICE & SELECTOR **/
+
+const pausedOrderRetriever = createSelector(
   retrievePausedOrders,
   (pausedOrders) => ({ pausedOrders })
 );
@@ -28,10 +28,11 @@ interface PausedOrdersProps {
 export default function PausedOrders(props: PausedOrdersProps) {
   const { setValue } = props;
   const { authMember, setOrderBuilder } = useGlobals();
-  const { pausedOrders } = useSelector(pausedOrdersRetriever);
+  const { pausedOrders } = useSelector(pausedOrderRetriever);
 
-  /* HANDLERS */
+  /** HANDLERS **/
 
+  // deleteOrderHandler
   const deleteOrderHandler = async (e: T) => {
     try {
       if (!authMember) throw new Error(Message.error2);
@@ -45,7 +46,6 @@ export default function PausedOrders(props: PausedOrdersProps) {
       if (confirmation) {
         const order = new OrderService();
         await order.updateOrder(input);
-
         setOrderBuilder(new Date());
       }
     } catch (err) {
@@ -54,6 +54,7 @@ export default function PausedOrders(props: PausedOrdersProps) {
     }
   };
 
+  // processOrderHandler
   const processOrderHandler = async (e: T) => {
     try {
       if (!authMember) throw new Error(Message.error2);
@@ -65,12 +66,12 @@ export default function PausedOrders(props: PausedOrdersProps) {
       };
 
       const confirmation = window.confirm(
-        "Do you want to proced with payment?"
+        "Do you want to proceed with payment?"
       );
       if (confirmation) {
         const order = new OrderService();
         await order.updateOrder(input);
-        props.setValue("2");
+        setValue("2");
         setOrderBuilder(new Date());
       }
     } catch (err) {
@@ -84,21 +85,23 @@ export default function PausedOrders(props: PausedOrdersProps) {
       <Stack>
         {pausedOrders?.map((order: Order) => {
           return (
-            <Box key={order._id} className="order-main-box">
-              <Box className="order-box-scroll">
+            <Box key={order._id} className={"order-main-box"}>
+              <Box className={"order-box-scroll"}>
                 {order?.orderItems?.map((item: OrderItem) => {
                   const product: Product = order.productData.filter(
                     (ele: Product) => item.productId === ele._id
                   )[0];
                   const imagePath = `${serverApi}/${product.productImages[0]}`;
                   return (
-                    <Box key={item._id} className="orders-name-price">
-                      <img src={imagePath} className="order-dish-img" />
-                      <p className="title-dish">{product.productName}</p>
-                      <Box className="price-box">
+                    <Box key={item._id} className={"orders-name-price"}>
+                      <img src={imagePath} className={"order-dish-img"} />
+
+                      <p className={"title-dish"}>{product.productName}</p>
+                      <Box className={"price-box"}>
                         <p>${item.itemPrice}</p>
-                        <img src="/icons/close.svg" />
+                        <img src={"/icons/close.svg"} />
                         <p>{item.itemQuantity}</p>
+                        <img src={"/icons/pause.svg"} />
                         <p style={{ marginLeft: "15px" }}>
                           ${item.itemQuantity * item.itemPrice}
                         </p>
@@ -107,14 +110,17 @@ export default function PausedOrders(props: PausedOrdersProps) {
                   );
                 })}
               </Box>
-              <Box className="total-price-box">
-                <Box className="box-total">
-                  <p>Product price</p>
+              <Box className={"total-price-box"}>
+                <Box className={"box-total"}>
+                  <p>ProductPrice</p>
                   <p>${order.orderTotal - order.orderDelivery}</p>
-                  <img src="/icons/plus.svg" style={{ marginLeft: "20px" }} />
+                  <img src={"/icons/plus.svg"} style={{ marginLeft: "20px" }} />
                   <p>Delivery cost</p>
                   <p>${order.orderDelivery}</p>
-                  <img src="/icons/pause.svg" style={{ marginLeft: "20px" }} />
+                  <img
+                    src={"/icons/pause.svg"}
+                    style={{ marginLeft: "20px" }}
+                  />
                   <p>Total</p>
                   <p>${order.orderTotal}</p>
                 </Box>
@@ -122,15 +128,15 @@ export default function PausedOrders(props: PausedOrdersProps) {
                   value={order._id}
                   variant="contained"
                   color="secondary"
-                  className="cancel-button"
+                  className={"cancel-button"}
                   onClick={deleteOrderHandler}
                 >
-                  Cansel
+                  Cancel
                 </Button>
                 <Button
                   value={order._id}
                   variant="contained"
-                  className="pay-button"
+                  className={"pay-button"}
                   onClick={processOrderHandler}
                 >
                   Payment
@@ -148,9 +154,8 @@ export default function PausedOrders(props: PausedOrdersProps) {
               justifyContent={"center"}
             >
               <img
-                src="/icons/noimage-list.svg"
+                src={"/icons/noimage-list.svg"}
                 style={{ width: 300, height: 300 }}
-                alt=""
               />
             </Box>
           ))}

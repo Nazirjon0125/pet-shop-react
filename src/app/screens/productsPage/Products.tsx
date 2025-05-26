@@ -257,7 +257,7 @@ export default function Products(props: ProductsProps) {
                         }}
                       >
                         <img
-                          src={"/icon/shopping-cart.svg"}
+                          src={"/icons/shopping-cart.svg"}
                           style={{ display: "flex" }}
                         />
                       </Button>

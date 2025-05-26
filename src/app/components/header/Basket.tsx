@@ -54,7 +54,7 @@ export default function Basket(props: BasketProps) {
       onDeleteAll();
 
       setOrderBuilder(new Date());
-      history("/order");
+      history("/orders");
     } catch (err) {
       console.log("Error, createOrder", err);
       sweetErrorHandling(err).then();
