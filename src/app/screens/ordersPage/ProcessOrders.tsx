@@ -31,6 +31,8 @@ export default function ProcessOrders(props: ProcessOrdersProps) {
   const { authMember, setOrderBuilder } = useGlobals();
   const { processOrders } = useSelector(processOrdersRetriever);
 
+  /* HANDLERS */
+
   const finishOrderHandler = async (e: T) => {
     try {
       if (!authMember) throw new Error(Message.error2);
@@ -38,7 +40,7 @@ export default function ProcessOrders(props: ProcessOrdersProps) {
       const orderId = e.target.value;
       const input: OrderUpdateInput = {
         orderId: orderId,
-        orderStatus: OrderStatus.PROCESS,
+        orderStatus: OrderStatus.FINISH,
       };
 
       const confirmation = window.confirm("have you received your order?");
