@@ -2,7 +2,7 @@
   width: 100%;
   height: 773px;
   display: flex;
-  background: url("/public/img/banner.webp");
+  background: url("/public/img/cat/cat2.jpg");
   background-size: cover;
 }
 
@@ -19,8 +19,8 @@
 }
 
 .home-navbar .navbar-container .menu .brand-logo {
-  width: 125px;
-  height: 30px;
+  width: 65px;
+  height: 65px;
 }
 
 .home-navbar .navbar-container .menu .links {
@@ -156,7 +156,6 @@
 .home-navbar .navbar-container .logo-frame .logo-img {
   width: 100%;
   height: 100%;
-  background: url("/public/img/logo.webp");
   background-size: contain;
   background-repeat: no-repeat;
   filter: invert(10%);
@@ -168,7 +167,6 @@
   width: 100%;
   height: 400px;
   display: flex;
-  background: url("/public/img/banner.webp");
   background-size: cover;
 }
 

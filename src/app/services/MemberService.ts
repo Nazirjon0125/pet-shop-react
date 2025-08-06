@@ -28,14 +28,14 @@ class MemberService {
 
   public async getRestaurnt(): Promise<Member> {
     try {
-      const url = this.path + "/member/restaurant";
+      const url = this.path + "/member/admin";
       const result = await axios.get(url);
-      console.log("getRestaurnt", result);
+      console.log("getAdmin", result);
 
       const restaurant: Member = result.data;
       return restaurant;
     } catch (err) {
-      console.log("Error, getRestaurnt:", err);
+      console.log("Error, getAdmin:", err);
       throw err;
     }
   }
