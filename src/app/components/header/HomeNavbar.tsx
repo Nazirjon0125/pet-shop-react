@@ -123,7 +123,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               <Box>
                 <Button
                   variant="contained"
-                  className="logo-button"
+                  className="btn login-btn"
                   onClick={() => setLoginOpen(true)}
                 >
                   Login
@@ -189,15 +189,17 @@ export default function HomeNavbar(props: HomeNavbarProps) {
         <Stack className={"header-frame"}>
           <Stack className={"detail"}>
             <Box className={"head-main-txt"}>
-              World's Most Delicious Cousine
+              Bringing joy, one pet at a time
             </Box>
-            <Box className={"wel-txt"}>The Choice, not just a choice</Box>
-            <Box className={"service-txt"}>24 hours service</Box>
+            <Box className={"wel-txt"}>
+              Your trusted path to a lifelong friend
+            </Box>
+            <Box className={"service-txt"}>Real care, real time — 24/7</Box>
             <Box className={"signup"}>
               {!authMember ? (
                 <Button
                   variant={"contained"}
-                  className={"signup-button"}
+                  className={"signup-btn"}
                   onClick={() => setSignupOpen(true)}
                 >
                   SIGN UP
@@ -205,9 +207,6 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               ) : null}
             </Box>
           </Stack>
-          <Box className="logo-frame">
-            <div className="logo-img"></div>
-          </Box>
         </Stack>
       </Container>
     </div>

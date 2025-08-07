@@ -49,7 +49,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
         <Stack className="menu">
           <Box>
             <NavLink to="/">
-              <img className="brand-logo" src="/icons/burak.svg" />
+              <img className="brand-logo" src="/img/logo.png" />
             </NavLink>
           </Box>
           <Stack className="links">
@@ -112,7 +112,7 @@ export default function OtherNavbar(props: OtherNavbarProps) {
               <Box>
                 <Button
                   variant="contained"
-                  className="logo-button"
+                  className="login-btn"
                   onClick={() => setLoginOpen(true)}
                 >
                   Login

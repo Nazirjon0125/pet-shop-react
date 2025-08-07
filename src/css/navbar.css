@@ -1,26 +1,29 @@
 .home-navbar {
   width: 100%;
-  height: 773px;
+  height: 500px;
   display: flex;
-  background: url("/public/img/cat/cat2.jpg");
+  background: url("/public/img/cat/cat2.jpg") center;
   background-size: cover;
 }
 
 .home-navbar .navbar-container {
+  position: relative;
   margin-top: 55px;
-  height: 642px;
+  height: 400px;
 }
 
 .home-navbar .navbar-container .menu {
+  /* position: fixed; */
   height: 55px;
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
 .home-navbar .navbar-container .menu .brand-logo {
-  width: 65px;
-  height: 65px;
+  width: 55px;
+  height: 55px;
 }
 
 .home-navbar .navbar-container .menu .links {
@@ -30,9 +33,24 @@
   align-items: center;
 }
 
-.home-navbar .navbar-container .menu .links .logo-button {
-  background: #3776cc;
-  color: #f8f8ff;
+.home-navbar .navbar-container .menu .links .btn {
+  padding: 10px 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.home-navbar .navbar-container .menu .links .login-btn {
+  background-color: #12171d;
+  color: white;
+  box-shadow: 0 4px 10px rgba(64, 77, 90, 0.4);
+}
+
+.home-navbar .navbar-container .menu .links .login-btn:hover {
+  box-shadow: 0 6px 15px rgba(24, 25, 25, 0.6);
+  transform: translateY(-2px);
 }
 
 .home-navbar .navbar-container .menu .user-avatar {
@@ -48,18 +66,24 @@
 .home-navbar .hover-line a {
   color: #f8f8ff;
   z-index: 100;
+  font-family: "Roboto Serif";
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 1.1px;
 }
 
 .home-navbar .underline {
   display: block;
   content: "";
-  border-bottom: solid 2px #d7b686;
+  border-bottom: solid 2px #d9ad1d;
 }
 
 .home-navbar .hover-line::after {
   display: block;
   content: "";
-  border-bottom: solid 2px #d7b686;
+  border-bottom: solid 2px #d9ad1d;
   transform: scaleX(0);
   transition: transform 250ms ease-in-out;
 }
@@ -75,8 +99,8 @@
 /* hearder-farm */
 
 .home-navbar .navbar-container .header-frame {
-  margin-top: 142px;
-  height: 462px;
+  margin-top: 45px;
+  height: 360px;
 
   display: flex;
   flex-direction: row;
@@ -85,17 +109,16 @@
 
 .home-navbar .navbar-container .header-frame .detail {
   width: 510px;
-
   display: flex;
   flex-direction: column;
 }
 
 .home-navbar .navbar-container .header-frame .detail .head-main-txt {
   width: 450px;
-  height: 450px;
+  height: 135px;
 
   font-family: "Roboto Serif";
-  font-size: 50px;
+  font-size: 40px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -105,10 +128,10 @@
 
 .home-navbar .navbar-container .header-frame .detail .wel-txt {
   width: 510px;
-  height: 42px;
+  height: auto;
 
   font-family: "Roboto Serif";
-  font-size: 36px;
+  font-size: 30px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -116,8 +139,8 @@
   color: #d7b686;
 }
 .home-navbar .navbar-container .header-frame .detail .service-txt {
-  margin-top: 23px;
-  width: 153px;
+  margin-top: 20px;
+  width: 220px;
   height: 23px;
 
   font-family: "Roboto Serif";
@@ -126,39 +149,28 @@
   font-weight: 400;
   line-height: normal;
   letter-spacing: -0.3px;
-  color: #d5d5d5;
+  color: #0c0c0c;
 }
 
 .home-navbar .navbar-container .detail .signup {
-  margin-top: 73px;
+  margin-top: 60px;
 }
-
-.home-navbar .navbar-container .detail .signup .signup-button {
+.home-navbar .navbar-container .detail .signup .signup-btn {
   width: 210px;
   height: 60px;
   border-radius: 4px;
-  background: #1976d2;
-  font-family: Poppins;
-  font-size: 17px;
+  font-family: "Poppins";
+  font-size: 20px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  letter-spacing: -0.3px;
-  color: #f8f8ff;
+  letter-spacing: 0px;
+  box-shadow: 0 4px 10px rgba(29, 45, 33, 0.4);
 }
 
-.home-navbar .navbar-container .logo-frame {
-  margin-top: 43px;
-  width: 690px;
-  height: 419px;
-}
-
-.home-navbar .navbar-container .logo-frame .logo-img {
-  width: 100%;
-  height: 100%;
-  background-size: contain;
-  background-repeat: no-repeat;
-  filter: invert(10%);
+.home-navbar .navbar-container .detail .signup .signup-btn:hover {
+  box-shadow: 0 4px 10px rgba(18, 21, 19, 0.4);
+  transform: translateY(-2px);
 }
 
 /* other navbar */
@@ -166,12 +178,13 @@
 .other-navbar {
   width: 100%;
   height: 400px;
+  background: url("/public/img/cat/cat2.jpg") center;
   display: flex;
   background-size: cover;
 }
 
 .other-navbar .navbar-container {
-  margin-top: 55px;
+  margin-top: 35px;
 }
 
 .other-navbar .navbar-container .menu {
@@ -182,8 +195,8 @@
 }
 
 .other-navbar .navbar-container .menu .brand-logo {
-  width: 125px;
-  height: 30px;
+  width: 55px;
+  height: 55px;
 }
 
 .other-navbar .navbar-container .menu .links {
@@ -192,10 +205,24 @@
   justify-content: space-between;
   align-items: center;
 }
+.other-navbar .navbar-container .menu .links .btn {
+  padding: 10px 20px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
-.other-navbar .navbar-container .menu .links .logo-button {
-  background: #3776cc;
-  color: #f8f8ff;
+.other-navbar .navbar-container .menu .links .login-btn {
+  background-color: #12171d;
+  color: #d7b686;
+  box-shadow: 0 4px 10px rgba(64, 77, 90, 0.4);
+}
+
+.other-navbar .navbar-container .menu .links .login-btn:hover {
+  box-shadow: 0 6px 15px rgba(24, 25, 25, 0.6);
+  transform: translateY(-2px);
 }
 
 .other-navbar .navbar-container .menu .user-avatar {
@@ -209,6 +236,12 @@
 }
 
 .other-navbar .hover-line a {
+  font-family: "Roboto Serif";
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.75px;
   color: #f8f8ff;
   z-index: 100;
 }
