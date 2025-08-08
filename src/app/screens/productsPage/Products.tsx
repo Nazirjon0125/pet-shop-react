@@ -41,7 +41,7 @@ export default function Products(props: ProductsProps) {
     page: 1,
     limit: 8,
     order: "createAt",
-    productCollection: ProductCollection.DISH,
+    productCollection: ProductCollection.CAT,
     search: "",
   });
 
@@ -96,7 +96,7 @@ export default function Products(props: ProductsProps) {
         <Stack flexDirection="column" alignItems="center">
           <Stack className="avatar-big-box">
             <Stack className="top-title">
-              <Box className="top-text">Burak Restaurant</Box>
+              <Box className="top-text">Pets for Sale</Box>
               <Box className="single-search-big-box">
                 <input
                   type="search"
@@ -163,48 +163,74 @@ export default function Products(props: ProductsProps) {
               <Button
                 variant="contained"
                 color={
-                  productSearch.productCollection === ProductCollection.DISH
+                  productSearch.productCollection === ProductCollection.CAT
                     ? "primary"
                     : "secondary"
                 }
-                onClick={() => searchCollectionHandler(ProductCollection.DISH)}
+                onClick={() => searchCollectionHandler(ProductCollection.CAT)}
               >
-                Dish
+                Cat
               </Button>
               <Button
                 variant="contained"
                 color={
-                  productSearch.productCollection === ProductCollection.SALAD
+                  productSearch.productCollection === ProductCollection.DOG
                     ? "primary"
                     : "secondary"
                 }
-                onClick={() => searchCollectionHandler(ProductCollection.SALAD)}
+                onClick={() => searchCollectionHandler(ProductCollection.DOG)}
               >
-                Salads
+                Dog
               </Button>
               <Button
                 variant="contained"
                 color={
-                  productSearch.productCollection === ProductCollection.DRINK
-                    ? "primary"
-                    : "secondary"
-                }
-                onClick={() => searchCollectionHandler(ProductCollection.DRINK)}
-              >
-                Drink
-              </Button>
-              <Button
-                variant="contained"
-                color={
-                  productSearch.productCollection === ProductCollection.DESSERT
+                  productSearch.productCollection === ProductCollection.PARROT
                     ? "primary"
                     : "secondary"
                 }
                 onClick={() =>
-                  searchCollectionHandler(ProductCollection.DESSERT)
+                  searchCollectionHandler(ProductCollection.PARROT)
                 }
               >
-                Desert
+                Parrot
+              </Button>
+              <Button
+                variant="contained"
+                color={
+                  productSearch.productCollection === ProductCollection.HAMSTER
+                    ? "primary"
+                    : "secondary"
+                }
+                onClick={() =>
+                  searchCollectionHandler(ProductCollection.HAMSTER)
+                }
+              >
+                Hamster
+              </Button>
+              <Button
+                variant="contained"
+                color={
+                  productSearch.productCollection === ProductCollection.TURTLE
+                    ? "primary"
+                    : "secondary"
+                }
+                onClick={() =>
+                  searchCollectionHandler(ProductCollection.TURTLE)
+                }
+              >
+                Turtle
+              </Button>
+              <Button
+                variant="contained"
+                color={
+                  productSearch.productCollection === ProductCollection.FISH
+                    ? "primary"
+                    : "secondary"
+                }
+                onClick={() => searchCollectionHandler(ProductCollection.FISH)}
+              >
+                Fish
               </Button>
               <Button
                 variant="contained"
@@ -224,9 +250,9 @@ export default function Products(props: ProductsProps) {
               products.map((product: Product) => {
                 const imagePath = `${serverApi}/${product.productImages[0]}`;
                 const sizeVolume =
-                  product.productCollection === ProductCollection.DRINK
-                    ? product.productVolume + " liter"
-                    : product.productSize + " size";
+                  product.productCollection === ProductCollection.FISH
+                    ? product.productSize
+                    : product.productYear;
                 return (
                   <Stack
                     key={product._id}

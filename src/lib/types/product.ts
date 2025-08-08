@@ -12,7 +12,7 @@ export interface Product {
   productPrice: number;
   productLeftCount: number;
   productSize: ProductSize;
-  productVolume: number;
+  productYear: number;
   productDesc?: string;
   productImages: string[];
   productViews: number;
