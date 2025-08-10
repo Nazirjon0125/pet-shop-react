@@ -12,14 +12,14 @@ export interface AppRootState {
 
 /* HOME PAGE */
 export interface HomePageState {
-  popularDishes: Product[];
-  newDishes: Product[];
+  popularAnimals: Product[];
+  newAnimals: Product[];
   topUsers: Member[];
 }
 
 /* PRODUCT PAGE */
 export interface ProductPageState {
-  restaurant: Member | null;
+  shop: Member | null;
   chosenProduct: Product | null;
   products: Product[];
 }

@@ -13,7 +13,7 @@ import { FreeMode, Navigation, Thumbs } from "swiper";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
-import { setChosenProduct, setRestaurant } from "./slice";
+import { setChosenProduct, setShop } from "./slice";
 import { createSelector } from "reselect";
 import { retrieveChosenProduct, retrieveRestaurant } from "./selector";
 import { Product } from "../../../lib/types/product";
@@ -27,7 +27,7 @@ import { CartItem } from "../../../lib/types/search";
 /* REDUX SLICE & SELECTOR */
 /* SLICE */
 const actionDispatch = (dispatch: Dispatch) => ({
-  setRestaurant: (data: Member) => dispatch(setRestaurant(data)),
+  setShop: (data: Member) => dispatch(setShop(data)),
   setChosenProduct: (data: Product) => dispatch(setChosenProduct(data)),
 });
 
@@ -52,7 +52,7 @@ interface ChosenProductProps {
 export default function ChosenProduct(props: ChosenProductProps) {
   const { onAdd } = props;
   const { productId } = useParams<{ productId: string }>();
-  const { setRestaurant, setChosenProduct } = actionDispatch(useDispatch());
+  const { setShop, setChosenProduct } = actionDispatch(useDispatch());
   const { chosenProduct } = useSelector(chosenProductRetriever);
   const { restaurant } = useSelector(restaurantRetriever);
 
@@ -67,7 +67,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
     const member = new MemberService();
     member
       .getRestaurnt()
-      .then((data) => setRestaurant(data))
+      .then((data) => setShop(data))
       .catch((err) => console.log(err));
   }, []);
 

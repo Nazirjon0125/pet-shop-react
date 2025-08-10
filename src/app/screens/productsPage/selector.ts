@@ -6,7 +6,7 @@ const selectProductPage = (state: AppRootState) => state.productPage;
 
 export const retrieveRestaurant = createSelector(
   selectProductPage,
-  (ProductsPage) => ProductsPage.restaurant
+  (ProductsPage) => ProductsPage.shop
 );
 
 export const retrieveChosenProduct = createSelector(

@@ -11,7 +11,7 @@ export default function Advertisement() {
         playsInline
         data-video-n-media=""
       >
-        <source type="video/mp4" src="video/burak-ads.mp4" />
+        <source type="video/mp4" src="video/pet.mp4" />
       </video>
     </div>
   );

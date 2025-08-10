@@ -100,7 +100,7 @@ export function Settings() {
           <div className={"up-del-box"}>
             <Button component="label" onChange={handleImageViwer}>
               <CloudDownloadIcon />
-              <input type="file" hidden />
+              <input type="file" name="memberImages" hidden />
             </Button>
           </div>
         </div>

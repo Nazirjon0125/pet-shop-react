@@ -21,6 +21,24 @@ import { serverApi } from "../../../lib/config";
 import { useNavigate } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
 
+import Card from "@mui/joy/Card";
+import CardCover from "@mui/joy/CardCover";
+import CardContent from "@mui/joy/CardContent";
+import Typography from "@mui/joy/Typography";
+import CardOverflow from "@mui/joy/CardOverflow";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import dayjs from "dayjs";
+import AspectRatio from "@mui/joy/AspectRatio";
+import Link from "@mui/joy/Link";
+import IconButton from "@mui/joy/IconButton";
+import Input from "@mui/joy/Input";
+import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
+import ModeCommentOutlined from "@mui/icons-material/ModeCommentOutlined";
+import SendOutlined from "@mui/icons-material/SendOutlined";
+import Face from "@mui/icons-material/Face";
+import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
+import { CssVarsProvider } from "@mui/joy/styles";
+
 /* REDUX SLICE & SELECTOR */
 const actionDispatch = (dispatch: Dispatch) => ({
   setProducts: (data: Product[]) => dispatch(setProducts(data)),
@@ -40,7 +58,7 @@ export default function Products(props: ProductsProps) {
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
     page: 1,
     limit: 8,
-    order: "createAt",
+    order: "createdAt",
     productCollection: ProductCollection.CAT,
     search: "",
   });
@@ -49,6 +67,7 @@ export default function Products(props: ProductsProps) {
   const history = useNavigate();
 
   useEffect(() => {
+    console.log("Sending productCollection:", productSearch.productCollection);
     const product = new ProductService();
     product
       .getProducts(productSearch)
@@ -65,28 +84,35 @@ export default function Products(props: ProductsProps) {
 
   /* HANDLERS */
   const searchCollectionHandler = (collection: ProductCollection) => {
-    productSearch.page = 1;
-    productSearch.productCollection = collection;
-    setProductSearch({ ...productSearch });
+    setProductSearch((prev) => ({
+      ...prev,
+      page: 1,
+      productCollection: collection,
+    }));
   };
-
   const searchOrderHandler = (order: string) => {
-    productSearch.page = 1;
-    productSearch.order = order;
-    setProductSearch({ ...productSearch });
+    setProductSearch((prev) => ({
+      ...prev,
+      page: 1,
+      order,
+    }));
   };
 
   const searchProductHandler = () => {
-    productSearch.search = searchText;
-    setProductSearch({ ...productSearch });
+    setProductSearch((prev) => ({
+      ...prev,
+      search: searchText,
+    }));
   };
 
   const paginationHandler = (e: ChangeEvent<any>, value: number) => {
-    productSearch.page = value;
-    setProductSearch({ ...productSearch });
+    setProductSearch((prev) => ({
+      ...prev,
+      page: value,
+    }));
   };
 
-  const chooseDishHandler = (id: string) => {
+  const chooseAnimalsHandler = (id: string) => {
     history(`/products/${id}`);
   };
 
@@ -246,97 +272,202 @@ export default function Products(props: ProductsProps) {
             </Stack>
           </Stack>
           <Stack className={"product-wrapper"}>
-            {products.length !== 0 ? (
-              products.map((product: Product) => {
-                const imagePath = `${serverApi}/${product.productImages[0]}`;
-                const sizeVolume =
-                  product.productCollection === ProductCollection.FISH
-                    ? product.productSize
-                    : product.productYear;
-                return (
-                  <Stack
-                    key={product._id}
-                    className={"product-card"}
-                    onClick={() => chooseDishHandler(product._id)}
-                  >
-                    <Stack
-                      className={"product-img"}
-                      sx={{
-                        backgroundImage: `url(${imagePath})`,
-                        backgroundRepeat: "no-repeat",
-                        backgroundPosition: "center",
-                        backgroundSize: "cover",
-                      }}
-                    >
-                      <div className={"product-sale"}>{sizeVolume}</div>
-                      <Button
-                        className={"shop-btn"}
-                        onClick={(e) => {
-                          onAdd({
-                            _id: product._id,
-                            quantity: 1,
-                            name: product.productName,
-                            price: product.productPrice,
-                            image: product.productImages[0],
-                          });
-                          e.stopPropagation(); // parentga bog'liq matniqlarni to'xtatib beradi
+            <CssVarsProvider>
+              {products.length !== 0 ? (
+                products.map((product: Product) => {
+                  const date = new Date(product.createdAt);
+                  const formatted = date.toLocaleString("uz-UZ", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  });
+                  const imagePath = `${serverApi}/${product.productImages[0]}`;
+                  const sizeVolume =
+                    product.productCollection === ProductCollection.FISH
+                      ? product.productSize
+                      : product.productYear;
+                  return (
+                    <div key={product._id}>
+                      <Card
+                        onClick={() => chooseAnimalsHandler(product._id)}
+                        className="card"
+                        variant="outlined"
+                        sx={{
+                          minWidth: 300,
+                          "--Card-radius": (theme) => theme.vars.radius.xs,
                         }}
                       >
-                        <img
-                          src={"/icons/shopping-cart.svg"}
-                          style={{ display: "flex" }}
-                        />
-                      </Button>
-                      <Button className={"view-btn"} sx={{ right: "36px" }}>
-                        <Badge
-                          badgeContent={product.productViews}
-                          color="secondary"
+                        <CardOverflow className="product-image-box">
+                          <AspectRatio>
+                            <img src={imagePath} alt="" loading="lazy" />
+                          </AspectRatio>
+                        </CardOverflow>
+                        <CardContent
+                          orientation="horizontal"
+                          sx={{ alignItems: "center", mx: -1 }}
                         >
-                          <RemoveRedEyeIcon
+                          <Box sx={{ width: 0, display: "flex", gap: 0.5 }}>
+                            <IconButton
+                              variant="plain"
+                              color="neutral"
+                              size="sm"
+                            >
+                              <FavoriteBorder />
+                            </IconButton>
+                            <IconButton
+                              variant="plain"
+                              color="neutral"
+                              size="sm"
+                            >
+                              <ModeCommentOutlined />
+                            </IconButton>
+                            <IconButton
+                              variant="plain"
+                              color="neutral"
+                              size="sm"
+                            >
+                              <SendOutlined />
+                            </IconButton>
+                          </Box>
+                          <Box
                             sx={{
-                              color:
-                                product.productViews === 0 ? "gray" : "white",
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 0.5,
+                              mx: "auto",
+                            }}
+                          ></Box>
+                          <Box
+                            sx={{
+                              width: 0,
+                              display: "flex",
+                              flexDirection: "row-reverse",
+                            }}
+                          >
+                            <IconButton
+                              variant="plain"
+                              color="neutral"
+                              size="sm"
+                            >
+                              <BookmarkBorderRoundedIcon />
+                            </IconButton>
+                          </Box>
+                        </CardContent>
+
+                        <CardContent>
+                          <Link
+                            component="button"
+                            underline="none"
+                            textColor="text.primary"
+                            sx={{ fontSize: "sm", fontWeight: "lg" }}
+                          >
+                            {product.productViews}{" "}
+                            <VisibilityIcon
+                              sx={{ fontSize: 25, marginLeft: "5px" }}
+                            />
+                          </Link>
+
+                          <Typography sx={{ fontSize: "sm" }}>
+                            <Link
+                              component="button"
+                              color="neutral"
+                              textColor="text.primary"
+                              sx={{ fontWeight: "lg" }}
+                            >
+                              {product.productName}
+                            </Link>{" "}
+                            {product.productDesc}
+                          </Typography>
+                          <Link
+                            component="button"
+                            underline="none"
+                            sx={{ fontSize: "sm", color: "text.tertiary" }}
+                          >
+                            {product.productStatus}
+                          </Link>
+                          <Link
+                            component="button"
+                            underline="none"
+                            sx={{
+                              fontSize: "10px",
+                              color: "text.tertiary",
+                              my: 0.5,
+                            }}
+                          >
+                            {dayjs(product.createdAt).format(
+                              "YYYY.MM.DD HH:mm"
+                            )}
+                          </Link>
+                        </CardContent>
+                        <CardContent orientation="horizontal" sx={{ gap: 1 }}>
+                          <IconButton
+                            size="sm"
+                            variant="plain"
+                            color="neutral"
+                            sx={{ ml: -1 }}
+                          >
+                            <Face />
+                          </IconButton>
+                          <Input
+                            variant="plain"
+                            size="sm"
+                            placeholder="Add a comment…"
+                            sx={{
+                              flex: 1,
+                              px: 0,
+                              "--Input-focusedThickness": "0px",
                             }}
                           />
-                        </Badge>
-                      </Button>
-                    </Stack>
-                    <Box className={"product-desc"}>
-                      <span className={"product-title"}>
-                        {product.productName}
-                      </span>
-                      <div className={"product-price"}>
-                        <MonetizationOnIcon />
-                        {product.productPrice}
-                      </div>
-                    </Box>
-                  </Stack>
-                );
-              })
-            ) : (
-              <Box className="no-data">Products are not available !</Box>
-            )}
-          </Stack>
-          <Stack className={"pagination-section"} spacing={2}>
-            <Pagination
-              count={
-                products.length != 0
-                  ? productSearch.page + 1
-                  : productSearch.page
-              }
-              page={productSearch.page}
-              renderItem={(item) => (
-                <PaginationItem
-                  slots={{
-                    previous: ArrowBackIcon,
-                    next: ArrowForwardIcon,
-                  }}
-                  {...item}
-                  color="secondary"
-                />
+                          <Link disabled underline="none" role="button">
+                            Post
+                          </Link>
+                        </CardContent>
+                      </Card>
+                    </div>
+                    // <Stack key={product._id}>
+                    //   <Stack
+                    //     className={"product-img"}
+                    //     sx={{
+                    //       backgroundImage: `url(${imagePath})`,
+                    //       backgroundRepeat: "no-repeat",
+                    //       backgroundPosition: "center",
+                    //       backgroundSize: "cover",
+                    //     }}
+                    //   >
+                    //     <div className={"product-sale"}>{sizeVolume}</div>
+                    //
+                    //     <Button className={"view-btn"} sx={{ right: "36px" }}>
+                    //       <Badge
+                    //         badgeContent={product.productViews}
+                    //         color="secondary"
+                    //       >
+                    //         <RemoveRedEyeIcon
+                    //           sx={{
+                    //             color:
+                    //               product.productViews === 0 ? "gray" : "white",
+                    //           }}
+                    //         />
+                    //       </Badge>
+                    //     </Button>
+                    //   </Stack>
+                    //   <Box className={"product-desc"}>
+                    //     <span className={"product-title"}>
+                    //       {product.productName}
+                    //     </span>
+                    //     <div className={"product-price"}>
+                    //       <MonetizationOnIcon />
+                    //       {product.productPrice}
+                    //     </div>
+                    //   </Box>
+                    // </Stack>
+                  );
+                })
+              ) : (
+                <Box className="no-data">Products are not available !</Box>
               )}
-              onChange={paginationHandler}
-            />
+            </CssVarsProvider>
           </Stack>
         </Stack>
       </Container>

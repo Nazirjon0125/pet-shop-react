@@ -116,15 +116,19 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 34px;
-  margin-top: -37%;
+  margin-top: -50%;
   margin-bottom: 100px;
 }
 
-.products-page .products .product-wrapper .product-card {
-  text-align: center;
-  height: auto;
+.products-page .products .product-wrapper .card {
+  min-width: 300px;
+  min-height: 420px;
+  box-shadow: 9px 13px 14px 5px rgba(0, 0, 0, 0.25),
+    inset -1px 2px 10px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
 }
-
 .products-page .products .product-card .product-sale {
   width: 90px;
   height: 30px;
