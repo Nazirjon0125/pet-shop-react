@@ -2,35 +2,36 @@ import { Box } from "@mui/material";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import Button from "@mui/material/Button";
 import { useGlobals } from "../../hooks/useGlobals";
-import { MemberUpdateInput } from "../../../lib/types/member";
 import { useState } from "react";
+import { MemberUpdateInput } from "../../../lib/types/member";
 import { T } from "../../../lib/types/common";
-import { Message, serverApi } from "../../../lib/config";
 import {
   sweetErrorHandling,
   sweetTopSmallSuccessAlert,
 } from "../../../lib/sweetAlert";
+import { Message, serverApi } from "../../../lib/config";
 import MemberService from "../../services/MemberService";
 
 export function Settings() {
   const { authMember, setAuthMember } = useGlobals();
-  const [memberIamge, setMemberIamge] = useState<string>(
-    authMember?.memberImage
-      ? `${serverApi}/${authMember.memberImage}`
+  const [memberImage, setMemberImage] = useState<string>(
+    authMember?.memberImages
+      ? `${serverApi}/${authMember.memberImages}`
       : "/icons/default-user.svg"
   );
+
   const [memberUpdateInput, setMemberUpdateInput] = useState<MemberUpdateInput>(
     {
       memberNick: authMember?.memberNick,
       memberPhone: authMember?.memberPhone,
+      memberPassword: authMember?.memberPassword,
       memberAddress: authMember?.memberAddress,
       memberDesc: authMember?.memberDesc,
-      memberImage: authMember?.memberImage,
+      memberImages: authMember?.memberImages,
     }
   );
 
-  /** HANDLER **/
-
+  /** Handlers */
   const memberNickHandler = (e: T) => {
     memberUpdateInput.memberNick = e.target.value;
     setMemberUpdateInput({ ...memberUpdateInput });
@@ -46,12 +47,11 @@ export function Settings() {
     setMemberUpdateInput({ ...memberUpdateInput });
   };
 
-  const memberDescHandler = (e: T) => {
+  const memberDesckHandler = (e: T) => {
     memberUpdateInput.memberDesc = e.target.value;
     setMemberUpdateInput({ ...memberUpdateInput });
   };
-
-  const handlerSubmitButton = async () => {
+  const handleSubmitButton = async () => {
     try {
       if (!authMember) throw new Error(Message.error2);
       if (
@@ -60,13 +60,13 @@ export function Settings() {
         memberUpdateInput.memberAddress === "" ||
         memberUpdateInput.memberDesc === ""
       ) {
-        throw new Error(Message.error3);
+        throw Error(Message.error3);
       }
 
       const member = new MemberService();
+
       const result = await member.updateMember(memberUpdateInput);
       setAuthMember(result);
-
       await sweetTopSmallSuccessAlert("Modified successfully!", 700);
     } catch (err) {
       console.log(err);
@@ -74,33 +74,33 @@ export function Settings() {
     }
   };
 
-  const handleImageViwer = (e: T) => {
+  const handleImageViewer = (e: T) => {
     const file = e.target.files[0];
-    console.log("file", file);
+    console.log("files:===", file);
     const fileType = file.type,
       validateImageType = ["image/jpg", "image/jpeg", "image/png"];
-
     if (!validateImageType.includes(fileType)) {
       sweetErrorHandling(Message.error5).then();
     } else {
       if (file) {
-        memberUpdateInput.memberImage = file;
+        memberUpdateInput.memberImages = file;
         setMemberUpdateInput({ ...memberUpdateInput });
-        setMemberIamge(URL.createObjectURL(file));
+        setMemberImage(URL.createObjectURL(file));
       }
     }
   };
   return (
     <Box className={"settings"}>
       <Box className={"member-media-frame"}>
-        <img src={memberIamge} className={"mb-image"} />
+        <img src={memberImage} alt="" className={"mb-image"} />
+
         <div className={"media-change-box"}>
           <span>Upload image</span>
           <p>JPG, JPEG, PNG formats only!</p>
           <div className={"up-del-box"}>
-            <Button component="label" onChange={handleImageViwer}>
+            <Button component="label" onChange={handleImageViewer}>
               <CloudDownloadIcon />
-              <input type="file" name="memberImages" hidden />
+              <input type="file" hidden />
             </Button>
           </div>
         </div>
@@ -111,9 +111,7 @@ export function Settings() {
           <input
             className={"spec-input mb-nick"}
             type="text"
-            placeholder={
-              authMember?.memberNick ? authMember.memberNick : "no member nick"
-            }
+            placeholder={authMember?.memberNick}
             value={memberUpdateInput.memberNick}
             name="memberNick"
             onChange={memberNickHandler}
@@ -126,9 +124,7 @@ export function Settings() {
           <input
             className={"spec-input mb-phone"}
             type="text"
-            placeholder={
-              authMember?.memberPhone ? authMember.memberPhone : "no phone"
-            }
+            placeholder={authMember?.memberPhone ?? "no phone"}
             value={memberUpdateInput.memberPhone}
             name="memberPhone"
             onChange={memberPhoneHandler}
@@ -142,7 +138,7 @@ export function Settings() {
             placeholder={
               authMember?.memberAddress
                 ? authMember.memberAddress
-                : "no address"
+                : "no Address"
             }
             value={memberUpdateInput.memberAddress}
             name="memberAddress"
@@ -156,16 +152,16 @@ export function Settings() {
           <textarea
             className={"spec-textarea mb-description"}
             placeholder={
-              authMember?.memberDesc ? authMember.memberDesc : "no description"
+              authMember?.memberDesc ? authMember.memberDesc : "no Description"
             }
             value={memberUpdateInput.memberDesc}
             name="memberDesc"
-            onChange={memberDescHandler}
+            onChange={memberDesckHandler}
           />
         </div>
       </Box>
       <Box className={"save-box"}>
-        <Button variant={"contained"} onClick={handlerSubmitButton}>
+        <Button variant={"contained"} onClick={handleSubmitButton}>
           Save
         </Button>
       </Box>

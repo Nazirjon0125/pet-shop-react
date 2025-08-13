@@ -98,8 +98,8 @@ export default function OrdersPage() {
               <div className="order-user-img">
                 <img
                   src={
-                    authMember?.memberImage
-                      ? `${serverApi}/${authMember.memberImage}`
+                    authMember?.memberImages
+                      ? `${serverApi}/${authMember.memberImages}`
                       : "/icons/default-user.svg"
                   }
                   className="order-user-avatar"
@@ -107,7 +107,7 @@ export default function OrdersPage() {
                 <div className="order-user-icon-box">
                   <img
                     src={
-                      authMember?.memberType === MemberType.RESTAURANT
+                      authMember?.memberType === MemberType.ADMIN
                         ? "/icons/restaurant.svg"
                         : "/icons/user-badge.svg"
                     }

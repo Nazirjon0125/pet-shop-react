@@ -7,7 +7,7 @@ import {
 export interface Product {
   _id: string;
   productStatus: ProductStatus;
-  productCollection: ProductCollection;
+  productCollection?: ProductCollection;
   productName: string;
   productPrice: number;
   productLeftCount: number;

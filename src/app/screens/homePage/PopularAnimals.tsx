@@ -13,6 +13,8 @@ import { createSelector } from "reselect";
 import { retrievePopularAnimals } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { serverApi } from "../../../lib/config";
+import { CreateNewFolder, Favorite, Visibility } from "@mui/icons-material";
+import { AspectRatio, Avatar, Chip, IconButton, Link } from "@mui/joy";
 
 /* REDUX SELECTOR */
 const popularAnimalsRetriever = createSelector(

@@ -26,7 +26,7 @@ class MemberService {
     }
   }
 
-  public async getRestaurnt(): Promise<Member> {
+  public async getAdmin(): Promise<Member> {
     try {
       const url = this.path + "/member/admin";
       const result = await axios.get(url);
@@ -94,7 +94,7 @@ class MemberService {
       formData.append("memberPhone", input.memberPhone || "");
       formData.append("memberAddress", input.memberAddress || "");
       formData.append("memberDesc", input.memberDesc || "");
-      formData.append("memberImage", input.memberImage || "");
+      formData.append("memberImage", input.memberImages || "");
 
       const result = await axios(`${serverApi}/member/update`, {
         method: "POST",

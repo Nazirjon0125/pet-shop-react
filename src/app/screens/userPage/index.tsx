@@ -6,19 +6,14 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import { Settings } from "./Settings";
 import { useNavigate } from "react-router-dom";
 import { useGlobals } from "../../hooks/useGlobals";
-import { useEffect } from "react";
 import { serverApi } from "../../../lib/config";
 import { MemberType } from "../../../lib/enums/member.enum";
 import "../../../css/userPage.css";
-
 export default function UserPage() {
-  const history = useNavigate();
+  const navigate = useNavigate();
   const { authMember } = useGlobals();
 
-  useEffect(() => {
-    if (!authMember) history("/");
-  }, [authMember, history]);
-
+  if (!authMember) navigate("/");
   return (
     <div className={"user-page"}>
       <Container>
@@ -42,22 +37,25 @@ export default function UserPage() {
                 <div className={"order-user-img"}>
                   <img
                     src={
-                      authMember?.memberImage
-                        ? `${serverApi}/${authMember.memberImage}`
+                      authMember?.memberImages
+                        ? `${serverApi}/${authMember.memberImages}`
                         : "/icons/default-user.svg"
                     }
+                    alt=""
                     className={"order-user-avatar"}
                   />
                   <div className={"order-user-icon-box"}>
                     <img
                       src={
-                        authMember?.memberType === MemberType.RESTAURANT
+                        authMember?.memberType === MemberType.ADMIN
                           ? "/icons/restaurant.svg"
-                          : "/icons/user-badge.svg"
+                          : "icons/restaurant.svg"
                       }
+                      alt=""
                     />
                   </div>
                 </div>
+
                 <span className={"order-user-name"}>
                   {authMember?.memberNick}
                 </span>

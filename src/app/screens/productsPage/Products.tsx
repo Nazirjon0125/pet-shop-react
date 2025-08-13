@@ -1,13 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Box, Button, Container, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import Badge from "@mui/material/Badge";
-import Pagination from "@mui/material/Pagination";
-import PaginationItem from "@mui/material/PaginationItem";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
@@ -22,7 +15,6 @@ import { useNavigate } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
 
 import Card from "@mui/joy/Card";
-import CardCover from "@mui/joy/CardCover";
 import CardContent from "@mui/joy/CardContent";
 import Typography from "@mui/joy/Typography";
 import CardOverflow from "@mui/joy/CardOverflow";
@@ -121,71 +113,31 @@ export default function Products(props: ProductsProps) {
       <Container>
         <Stack flexDirection="column" alignItems="center">
           <Stack className="avatar-big-box">
-            <Stack className="top-title">
-              <Box className="top-text">Pets for Sale</Box>
-              <Box className="single-search-big-box">
-                <input
-                  type="search"
-                  className="single-search-input"
-                  name="singleResearch"
-                  placeholder="Type here"
-                  value={searchText}
-                  onChange={(e) => setSearchText(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") searchProductHandler();
-                  }}
-                />
-                <Button
-                  className="single-button-search"
-                  variant="contained"
-                  endIcon={<SearchIcon />}
-                  onClick={searchProductHandler}
-                >
-                  Search
-                </Button>
-              </Box>
-            </Stack>
+            <Box className="single-search-big-box">
+              <input
+                type="search"
+                className="single-search-input"
+                name="singleResearch"
+                placeholder="Type here"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") searchProductHandler();
+                }}
+              />
+              <Button
+                className="single-button-search"
+                variant="contained"
+                endIcon={<SearchIcon />}
+                onClick={searchProductHandler}
+              >
+                Search
+              </Button>
+            </Box>
           </Stack>
-          <Stack className={"dishes-filter-section"}>
-            <Stack className={"dishes-filter-box"}>
-              <Button
-                variant={"contained"}
-                className={"order"}
-                color={
-                  productSearch.order === "createdAt" ? "primary" : "secondary"
-                }
-                onClick={() => searchOrderHandler("createdAt")}
-              >
-                New
-              </Button>
-              <Button
-                variant={"contained"}
-                className={"order"}
-                color={
-                  productSearch.order === "productPrice"
-                    ? "primary"
-                    : "secondary"
-                }
-                onClick={() => searchOrderHandler("productPrice")}
-              >
-                Price
-              </Button>
-              <Button
-                variant={"contained"}
-                className={"order"}
-                color={
-                  productSearch.order === "productViews"
-                    ? "primary"
-                    : "secondary"
-                }
-                onClick={() => searchOrderHandler("productViews")}
-              >
-                Views
-              </Button>
-            </Stack>
-          </Stack>
-          <Stack className={"list-category-section"}>
-            <Stack className="product-category">
+          <Box className="top-text">Pets for Sale</Box>
+          <Stack className={"animals-filter-box"}>
+            <Stack className="category-box">
               <Button
                 variant="contained"
                 color={
@@ -268,6 +220,42 @@ export default function Products(props: ProductsProps) {
                 onClick={() => searchCollectionHandler(ProductCollection.OTHER)}
               >
                 Other
+              </Button>
+            </Stack>
+            <Stack className="filter-box">
+              <Button
+                variant={"contained"}
+                className={"order"}
+                color={
+                  productSearch.order === "createdAt" ? "primary" : "secondary"
+                }
+                onClick={() => searchOrderHandler("createdAt")}
+              >
+                New
+              </Button>
+              <Button
+                variant={"contained"}
+                className={"order"}
+                color={
+                  productSearch.order === "productPrice"
+                    ? "primary"
+                    : "secondary"
+                }
+                onClick={() => searchOrderHandler("productPrice")}
+              >
+                Price
+              </Button>
+              <Button
+                variant={"contained"}
+                className={"order"}
+                color={
+                  productSearch.order === "productViews"
+                    ? "primary"
+                    : "secondary"
+                }
+                onClick={() => searchOrderHandler("productViews")}
+              >
+                Views
               </Button>
             </Stack>
           </Stack>
@@ -355,7 +343,6 @@ export default function Products(props: ProductsProps) {
                             </IconButton>
                           </Box>
                         </CardContent>
-
                         <CardContent>
                           <Link
                             component="button"
@@ -475,16 +462,16 @@ export default function Products(props: ProductsProps) {
         <Box className="brand-text">Our Family Brands</Box>
         <Stack className="brand-cards">
           <Box className="brand-card">
-            <img src="/img/gurme.webp" alt="" />
+            <img src="/img/others/6.jpg" alt="" />
           </Box>
           <Box className="brand-card">
-            <img src="/img/seafood.webp" alt="" />
+            <img src="/img/others/7.jpg" alt="" />
           </Box>
           <Box className="brand-card">
-            <img src="/img/sweets.webp" alt="" />
+            <img src="/img/others/9.jpg" alt="" />
           </Box>
           <Box className="brand-card">
-            <img src="/img/doner.webp" alt="" />
+            <img src="/img/others/8.jpg" alt="" />
           </Box>
         </Stack>
       </div>

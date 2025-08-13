@@ -30,3 +30,10 @@ export interface OrdersPageState {
   processOrders: Order[];
   finishedOrders: Order[];
 }
+
+/* HEADER */
+export interface HeaderState {
+  shop: Member | null;
+  chosenProduct: Product | null;
+  products: Product[];
+}

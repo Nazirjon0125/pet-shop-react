@@ -2,6 +2,13 @@ import { Box, Stack } from "@mui/material";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay, Navigation, Pagination } from "swiper";
 import { plans } from "../../../lib/data/plans";
+import {
+  ReactElement,
+  JSXElementConstructor,
+  ReactNode,
+  ReactPortal,
+  Key,
+} from "react";
 
 SwiperCore.use([Autoplay, Navigation, Pagination]);
 
@@ -12,6 +19,7 @@ export default function Events() {
         <Box className={"events-text"}>
           <span className={"category-title"}>Events</span>
         </Box>
+
         <Swiper
           className={"events-info swiper-wrapper"}
           slidesPerView={"auto"}
@@ -30,41 +38,93 @@ export default function Events() {
             disableOnInteraction: true,
           }}
         >
-          {plans.map((value, number) => {
-            return (
-              <SwiperSlide key={number} className={"events-info-frame"}>
-                <div className={"events-img"}>
-                  <img src={value.img} className={"events-img"} />
-                </div>
-                <Box className={"events-desc"}>
-                  <Box className={"events-bott"}>
-                    <Box className={"bott-left"}>
-                      <div className={"event-title-speaker"}>
-                        <strong>{value.title}</strong>
-                        <div className={"event-organizator"}>
-                          <img src={"/icons/speaker.svg"} />
-                          <p className={"spec-text-author"}>{value.author}</p>
+          {plans.map(
+            (
+              value: {
+                img: string | undefined;
+                title:
+                  | string
+                  | number
+                  | boolean
+                  | ReactElement<any, string | JSXElementConstructor<any>>
+                  | Iterable<ReactNode>
+                  | ReactPortal
+                  | null
+                  | undefined;
+                author:
+                  | string
+                  | number
+                  | boolean
+                  | ReactElement<any, string | JSXElementConstructor<any>>
+                  | Iterable<ReactNode>
+                  | ReactPortal
+                  | null
+                  | undefined;
+                desc:
+                  | string
+                  | number
+                  | boolean
+                  | ReactElement<any, string | JSXElementConstructor<any>>
+                  | Iterable<ReactNode>
+                  | ReactPortal
+                  | null
+                  | undefined;
+                date:
+                  | string
+                  | number
+                  | boolean
+                  | ReactElement<any, string | JSXElementConstructor<any>>
+                  | Iterable<ReactNode>
+                  | ReactPortal
+                  | null
+                  | undefined;
+                location:
+                  | string
+                  | number
+                  | boolean
+                  | ReactElement<any, string | JSXElementConstructor<any>>
+                  | Iterable<ReactNode>
+                  | ReactPortal
+                  | null
+                  | undefined;
+              },
+              number: Key | null | undefined
+            ) => {
+              return (
+                <SwiperSlide key={number} className={"events-info-frame"}>
+                  <div className={"events-img"}>
+                    <img src={value.img} className={"events-img"} />
+                  </div>
+                  <Box className={"events-desc"}>
+                    <Box className={"events-bott"}>
+                      <Box className={"bott-left"}>
+                        <div className={"event-title-speaker"}>
+                          <strong>{value.title}</strong>
+                          <div className={"event-organizator"}>
+                            <img src={"/icons/speaker.svg"} />
+                            <p className={"spec-text-author"}>{value.author}</p>
+                          </div>
                         </div>
-                      </div>
 
-                      <p className={"text-desc"}> {value.desc} </p>
+                        <p className={"text-desc"}> {value.desc} </p>
 
-                      <div className={"bott-info"}>
-                        <div className={"bott-info-main"}>
-                          <img src={"/icons/calendar.svg"} />
-                          {value.date}
+                        <div className={"bott-info"}>
+                          <div className={"bott-info-main"}>
+                            <img src={"/icons/calendar.svg"} />
+                            {value.date}
+                          </div>
+                          <div className={"bott-info-main"}>
+                            <img src={"/icons/location.svg"} />
+                            {value.location}
+                          </div>
                         </div>
-                        <div className={"bott-info-main"}>
-                          <img src={"/icons/location.svg"} />
-                          {value.location}
-                        </div>
-                      </div>
+                      </Box>
                     </Box>
                   </Box>
-                </Box>
-              </SwiperSlide>
-            );
-          })}
+                </SwiperSlide>
+              );
+            }
+          )}
         </Swiper>
         <Box className={"prev-next-frame"}>
           <img

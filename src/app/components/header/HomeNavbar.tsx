@@ -7,29 +7,14 @@ import {
   MenuItem,
   Stack,
 } from "@mui/material";
-import { NavLink, useNavigate } from "react-router-dom";
-import { Dispatch } from "@reduxjs/toolkit";
+import { NavLink } from "react-router-dom";
+
 import Basket from "./Basket";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React from "react";
 import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
 import { serverApi } from "../../../lib/config";
 import { Logout } from "@mui/icons-material";
-import ProductService from "../../services/ProductService";
-import { ProductCollection } from "../../../lib/enums/product.enum";
-import { Product, ProductInquiry } from "../../../lib/types/product";
-import { useDispatch, useSelector } from "react-redux";
-import { setProducts } from "../../screens/productsPage/slice";
-import { createSelector } from "@reduxjs/toolkit";
-import { retrieveProducts } from "../../screens/productsPage/selector";
-import SearchIcon from "@mui/icons-material/Search";
-
-const actionDispatch = (dispatch: Dispatch) => ({
-  setProducts: (data: Product[]) => dispatch(setProducts(data)),
-});
-const productsRetriever = createSelector(retrieveProducts, (products) => ({
-  products,
-}));
 
 interface HomeNavbarProps {
   cartItems: CartItem[];
@@ -61,57 +46,6 @@ export default function HomeNavbar(props: HomeNavbarProps) {
   } = props;
   const { authMember } = useGlobals();
 
-  const { setProducts } = actionDispatch(useDispatch());
-  const { products } = useSelector(productsRetriever);
-  const [productSearch, setProductSearch] = useState<ProductInquiry>({
-    page: 1,
-    limit: 8,
-    order: "createAt",
-    productCollection: ProductCollection.CAT,
-    search: "",
-  });
-
-  const [searchText, setSearchText] = useState<string>("");
-  const history = useNavigate();
-
-  useEffect(() => {
-    const product = new ProductService();
-    product
-      .getProducts(productSearch)
-      .then((data) => setProducts(data))
-      .catch((err) => console.log(err));
-  }, [productSearch]);
-
-  useEffect(() => {
-    if (searchText === "") {
-      productSearch.search = "";
-      setProductSearch({ ...productSearch });
-    }
-  }, [searchText]);
-
-  /* HANDLERS */
-  const searchCollectionHandler = (collection: ProductCollection) => {
-    productSearch.page = 1;
-    productSearch.productCollection = collection;
-    setProductSearch({ ...productSearch });
-  };
-
-  const searchOrderHandler = (order: string) => {
-    productSearch.page = 1;
-    productSearch.order = order;
-    setProductSearch({ ...productSearch });
-  };
-
-  const searchProductHandler = () => {
-    productSearch.search = searchText;
-    setProductSearch({ ...productSearch });
-  };
-
-  const paginationHandler = (e: ChangeEvent<any>, value: number) => {
-    productSearch.page = value;
-    setProductSearch({ ...productSearch });
-  };
-
   return (
     <div className="home-navbar">
       <Container className="navbar-container">
@@ -122,25 +56,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               <strong>PET-SHOP</strong>
             </NavLink>
           </Box>
-          <Box className="single-search-big-box">
-            <input
-              type="search"
-              className="single-search-input"
-              name="singleResearch"
-              placeholder="Type here"
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") searchProductHandler();
-              }}
-            />
-            <Button
-              className="single-button-search"
-              variant="contained"
-              endIcon={<SearchIcon />}
-              onClick={searchProductHandler}
-            ></Button>
-          </Box>
+
           <Stack className="links">
             <Box className={"hover-line"}>
               <NavLink
@@ -225,8 +141,8 @@ export default function HomeNavbar(props: HomeNavbarProps) {
               <img
                 className="user-avatar"
                 src={
-                  authMember?.memberImage
-                    ? `${serverApi}/${authMember?.memberImage}`
+                  authMember?.memberImages
+                    ? `${serverApi}/${authMember?.memberImages}`
                     : "/icons/default-user.svg"
                 }
                 aria-haspopup={"true"}

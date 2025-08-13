@@ -1,17 +1,14 @@
-import React from "react";
 import { Box, Container, Stack } from "@mui/material";
 import Card from "@mui/joy/Card";
 import { CssVarsProvider, Typography } from "@mui/joy";
 import CardOverflow from "@mui/joy/CardOverflow";
 import AspectRatio from "@mui/joy/AspectRatio";
-
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { retrieveTopUsers } from "./selector";
 import { serverApi } from "../../../lib/config";
 import { Member } from "../../../lib/types/member";
 
-/* REDUX SLICE & SELECTOR */
 const topUsersRetriever = createSelector(retrieveTopUsers, (topUsers) => ({
   topUsers,
 }));
@@ -27,7 +24,8 @@ export default function ActiveUsers() {
             <CssVarsProvider>
               {topUsers.length !== 0 ? (
                 topUsers.map((member: Member) => {
-                  const imagePath = `${serverApi}/${member.memberImage}`;
+                  const imagePath = `${serverApi}/${member.memberImages}`;
+
                   return (
                     <Card
                       key={member._id}
@@ -40,16 +38,21 @@ export default function ActiveUsers() {
                         </AspectRatio>
                       </CardOverflow>
 
-                      <CardOverflow>
-                        <Typography className="member-nickname">
-                          {member.memberNick}
-                        </Typography>
+                      <CardOverflow variant="soft" className="user-detail">
+                        <Stack className="info">
+                          <Stack flexDirection="row">
+                            <Typography className={"member-nickname"}>
+                              {member.memberNick}
+                            </Typography>
+                          </Stack>
+                          <Stack></Stack>
+                        </Stack>
                       </CardOverflow>
                     </Card>
                   );
                 })
               ) : (
-                <Box className="no-data">New Active Users!</Box>
+                <Box className="no-data">New products are not available!</Box>
               )}
             </CssVarsProvider>
           </Stack>

@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { setChosenProduct, setShop } from "./slice";
 import { createSelector } from "reselect";
-import { retrieveChosenProduct, retrieveRestaurant } from "./selector";
+import { retrieveChosenProduct, retrieveShop } from "./selector";
 import { Product } from "../../../lib/types/product";
 import ProductService from "../../services/ProductService";
 import { useParams } from "react-router-dom";
@@ -38,12 +38,9 @@ const chosenProductRetriever = createSelector(
     chosenProduct,
   })
 );
-const restaurantRetriever = createSelector(
-  retrieveRestaurant,
-  (restaurant) => ({
-    restaurant,
-  })
-);
+const shopRetriever = createSelector(retrieveShop, (shop) => ({
+  shop,
+}));
 
 interface ChosenProductProps {
   onAdd: (item: CartItem) => void;
@@ -54,7 +51,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
   const { productId } = useParams<{ productId: string }>();
   const { setShop, setChosenProduct } = actionDispatch(useDispatch());
   const { chosenProduct } = useSelector(chosenProductRetriever);
-  const { restaurant } = useSelector(restaurantRetriever);
+  const { shop } = useSelector(shopRetriever);
 
   useEffect(() => {
     if (!productId) return;
@@ -66,7 +63,7 @@ export default function ChosenProduct(props: ChosenProductProps) {
 
     const member = new MemberService();
     member
-      .getRestaurnt()
+      .getAdmin()
       .then((data) => setShop(data))
       .catch((err) => console.log(err));
   }, []);
@@ -99,8 +96,8 @@ export default function ChosenProduct(props: ChosenProductProps) {
             <strong className={"product-name"}>
               {chosenProduct?.productName}
             </strong>
-            <span className={"resto-name"}>{restaurant?.memberNick}</span>
-            <span className={"resto-name"}>{restaurant?.memberPhone}</span>
+            <span className={"resto-name"}>{shop?.memberNick}</span>
+            <span className={"resto-name"}>{shop?.memberPhone}</span>
             <Box className={"rating-box"}>
               <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
               <div className={"evaluation-box"}>

@@ -25,10 +25,10 @@ const newAnimalsRetriver = createSelector(retrieveNewAnimals, (newAnimals) => ({
   newAnimals,
 }));
 
-export default function NewDishes() {
+export default function NewAnimals() {
   const { newAnimals } = useSelector(newAnimalsRetriver);
 
-  console.log("popularDishes", newAnimals);
+  console.log("newAnimals", newAnimals);
   return (
     <div className={"new-products-frame"}>
       <Container>
@@ -72,7 +72,6 @@ export default function NewDishes() {
                         variant="soft"
                         sx={{ bgcolor: "background.level1" }}
                       >
-                        <Divider variant="inset" />
                         <CardContent orientation="horizontal">
                           <Typography
                             level="body-xs"
