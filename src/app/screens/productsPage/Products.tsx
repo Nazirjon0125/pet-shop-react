@@ -1,5 +1,13 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { Box, Button, Container, Stack } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Menu,
+  MenuItem,
+  Select,
+  Stack,
+} from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +17,10 @@ import { createSelector } from "reselect";
 import { retrieveProducts } from "./selector";
 import { Product, ProductInquiry } from "../../../lib/types/product";
 import ProductService from "../../services/ProductService";
-import { ProductCollection } from "../../../lib/enums/product.enum";
+import {
+  ProductCollection,
+  ProductStatus,
+} from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
 import { useNavigate } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
@@ -53,13 +64,13 @@ export default function Products(props: ProductsProps) {
   const { products } = useSelector(productsRetriever);
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
     page: 1,
-    limit: 8,
+    limit: 12,
     order: "createdAt",
     search: "",
   });
 
   const [searchText, setSearchText] = useState<string>("");
-  const history = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.log("Sending productCollection:", productSearch.productCollection);
@@ -108,233 +119,149 @@ export default function Products(props: ProductsProps) {
   };
 
   const chooseAnimalsHandler = (id: string) => {
-    history(`/products/${id}`);
+    navigate(`/products/${id}`);
   };
 
   return (
     <div className={"products"}>
       <Container>
         <Stack flexDirection="column" alignItems="center">
-          <Stack className="avatar-big-box">
-            <Box className="single-search-big-box">
-              <input
-                type="search"
-                className="single-search-input"
-                name="singleResearch"
-                placeholder="Type here"
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") searchProductHandler();
-                }}
-              />
-              <Button
-                className="single-button-search"
-                variant="contained"
-                endIcon={<SearchIcon />}
-                onClick={searchProductHandler}
-              >
-                Search
-              </Button>
-            </Box>
+          <Stack className="single-search-big-box">
+            <input
+              type="search"
+              className="single-search-input"
+              name="singleResearch"
+              placeholder="Type here"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") searchProductHandler();
+              }}
+            />
+            <Button
+              className="single-button-search"
+              endIcon={<SearchIcon />}
+              onClick={searchProductHandler}
+            ></Button>
           </Stack>
           <Box className="top-title">Pets for Sale</Box>
           <Stack className={"animals-filter-box"}>
             <Stack className="category-box">
               <Button
                 className="img-box"
-                variant="contained"
                 sx={{
                   backgroundColor:
                     productSearch.productCollection === ProductCollection.CAT
-                      ? "#757575"
-                      : "#237803",
-                  color: "757575", // matn rangi
-                  "&:hover": {
-                    backgroundColor:
-                      productSearch.productCollection === ProductCollection.CAT
-                        ? "#237803"
-                        : "#757575",
-                  },
+                      ? "#FF7043"
+                      : "#e0b074",
                 }}
                 onClick={() => searchCollectionHandler(ProductCollection.CAT)}
               >
                 <img className="image" src="/icons/cats.png" alt="" />
-                <p>Cat</p>
+                <p className="animals-name">Cat</p>
               </Button>
               <Button
                 className="img-box"
-                variant="contained"
                 sx={{
-                  backgroundColor:
+                  background:
                     productSearch.productCollection === ProductCollection.DOG
-                      ? "#f57c00"
-                      : "#9e9e9e",
-                  color: "757575", // matn rangi
-                  "&:hover": {
-                    backgroundColor:
-                      productSearch.productCollection === ProductCollection.DOG
-                        ? "#ef6c00"
-                        : "#757575",
-                  },
+                      ? "#FF7043"
+                      : "#84CD16",
                 }}
                 onClick={() => searchCollectionHandler(ProductCollection.DOG)}
               >
                 <img className="image" src="/icons/dogs.png" alt="" />
-                <p>Dog</p>
+                <p className="animals-name">Dog</p>
               </Button>
               <Button
                 className="img-box"
-                variant="contained"
                 sx={{
                   backgroundColor:
                     productSearch.productCollection === ProductCollection.PARROT
-                      ? "#f57c00"
-                      : "#9e9e9e",
-                  color: "757575", // matn rangi
-                  "&:hover": {
-                    backgroundColor:
-                      productSearch.productCollection ===
-                      ProductCollection.PARROT
-                        ? "#ef6c00"
-                        : "#757575",
-                  },
+                      ? "#FF7043"
+                      : "#FFC0CB",
                 }}
                 onClick={() =>
                   searchCollectionHandler(ProductCollection.PARROT)
                 }
               >
                 <img className="image" src="/icons/parrot.png" alt="" />
-                <p>Parrot</p>
+                <p className="animals-name">Parrot</p>
               </Button>
               <Button
                 className="img-box"
-                variant="contained"
                 sx={{
                   backgroundColor:
-                    productSearch.productCollection === ProductCollection.PARROT
-                      ? "#f57c00"
-                      : "#9e9e9e",
-                  color: "757575", // matn rangi
-                  "&:hover": {
-                    backgroundColor:
-                      productSearch.productCollection ===
-                      ProductCollection.PARROT
-                        ? "#ef6c00"
-                        : "#757575",
-                  },
+                    productSearch.productCollection ===
+                    ProductCollection.HAMSTER
+                      ? "#FF7043"
+                      : "#d9e3d7",
                 }}
                 onClick={() =>
                   searchCollectionHandler(ProductCollection.HAMSTER)
                 }
               >
                 <img className="image" src="/icons/hamster.png" alt="" />
-                <p>Hamster</p>
+                <p className="animals-name">Hamster</p>
               </Button>
               <Button
                 className="img-box"
-                variant="contained"
                 sx={{
                   backgroundColor:
-                    productSearch.productCollection === ProductCollection.PARROT
-                      ? "#f57c00"
-                      : "#9e9e9e",
-                  color: "757575", // matn rangi
-                  "&:hover": {
-                    backgroundColor:
-                      productSearch.productCollection ===
-                      ProductCollection.PARROT
-                        ? "#ef6c00"
-                        : "#757575",
-                  },
+                    productSearch.productCollection === ProductCollection.TURTLE
+                      ? "#FF7043"
+                      : "#19bcb6",
                 }}
                 onClick={() =>
                   searchCollectionHandler(ProductCollection.TURTLE)
                 }
               >
                 <img className="image" src="/icons/turtle.png" alt="" />
-                <p>Turtle</p>
+                <p className="animals-name">Turtle</p>
               </Button>
               <Button
                 className="img-box"
-                variant="contained"
                 sx={{
                   backgroundColor:
-                    productSearch.productCollection === ProductCollection.PARROT
-                      ? "#f57c00"
-                      : "#9e9e9e",
-                  color: "757575", // matn rangi
-                  "&:hover": {
-                    backgroundColor:
-                      productSearch.productCollection ===
-                      ProductCollection.PARROT
-                        ? "#ef6c00"
-                        : "#757575",
-                  },
+                    productSearch.productCollection === ProductCollection.FISH
+                      ? "#FF7043"
+                      : "#b5324c",
                 }}
                 onClick={() => searchCollectionHandler(ProductCollection.FISH)}
               >
                 <img className="image" src="/icons/fish.png" alt="" />
-                <p>Fish</p>
+                <p className="animals-name">Fish</p>
               </Button>
               <Button
                 className="img-box"
-                variant="contained"
                 sx={{
                   backgroundColor:
-                    productSearch.productCollection === ProductCollection.PARROT
-                      ? "#f57c00"
+                    productSearch.productCollection === ProductCollection.OTHER
+                      ? "#FF7043"
                       : "#9e9e9e",
-                  color: "757575", // matn rangi
-                  "&:hover": {
-                    backgroundColor:
-                      productSearch.productCollection ===
-                      ProductCollection.PARROT
-                        ? "#ef6c00"
-                        : "#757575",
-                  },
                 }}
                 onClick={() => searchCollectionHandler(ProductCollection.OTHER)}
               >
                 <img className="image" src="/icons/dogs.png" alt="" />
-                <p>Other</p>
+                <p className="animals-name">Other</p>
               </Button>
             </Stack>
             <Stack className="filter-box">
-              <Button
-                variant={"contained"}
-                className={"order"}
-                color={
-                  productSearch.order === "createdAt" ? "primary" : "secondary"
-                }
-                onClick={() => searchOrderHandler("createdAt")}
+              <Select
+                className="filter-select"
+                value={productSearch.order}
+                onChange={(e) => searchOrderHandler(e.target.value)}
               >
-                New
-              </Button>
-              <Button
-                variant={"contained"}
-                className={"order"}
-                color={
-                  productSearch.order === "productPrice"
-                    ? "primary"
-                    : "secondary"
-                }
-                onClick={() => searchOrderHandler("productPrice")}
-              >
-                Price
-              </Button>
-              <Button
-                variant={"contained"}
-                className={"order"}
-                color={
-                  productSearch.order === "productViews"
-                    ? "primary"
-                    : "secondary"
-                }
-                onClick={() => searchOrderHandler("productViews")}
-              >
-                Views
-              </Button>
+                <MenuItem className="selected" value="createdAt">
+                  New
+                </MenuItem>
+                <MenuItem className="selected" value="productPrice">
+                  Price
+                </MenuItem>
+                <MenuItem className="selected" value="productViews">
+                  Views
+                </MenuItem>
+              </Select>
             </Stack>
           </Stack>
           <Stack className={"product-wrapper"}>
@@ -357,7 +284,6 @@ export default function Products(props: ProductsProps) {
                   return (
                     <Stack key={product._id}>
                       <Card
-                        onClick={() => chooseAnimalsHandler(product._id)}
                         className="product-card"
                         variant="outlined"
                         sx={{
@@ -365,11 +291,16 @@ export default function Products(props: ProductsProps) {
                           "--Card-radius": (theme) => theme.vars.radius.xs,
                         }}
                       >
-                        <CardOverflow className="product-image-box">
-                          <AspectRatio>
-                            <img src={imagePath} alt="" loading="lazy" />
-                          </AspectRatio>
+                        <Stack className="product-image-box">
+                          <img
+                            onClick={() => chooseAnimalsHandler(product._id)}
+                            src={imagePath}
+                            alt=""
+                            loading="lazy"
+                          />
+                          <div className={"product-sale"}>{sizeVolume}</div>
                           <Box
+                            className="shop-btn"
                             onClick={(e) => {
                               onAdd({
                                 _id: product._id,
@@ -381,9 +312,9 @@ export default function Products(props: ProductsProps) {
                               e.stopPropagation();
                             }}
                           >
-                            <img src="/icons/shopping-card.svg" alt="" />
+                            <img src="/icons/shop.svg" alt="" />
                           </Box>
-                        </CardOverflow>
+                        </Stack>
                         <CardContent
                           orientation="horizontal"
                           sx={{ alignItems: "center", mx: -1 }}
@@ -459,13 +390,22 @@ export default function Products(props: ProductsProps) {
                             </Link>{" "}
                             {product.productDesc}
                           </Typography>
-                          <Link
-                            component="button"
-                            underline="none"
-                            sx={{ fontSize: "sm", color: "text.tertiary" }}
-                          >
-                            {product.productStatus}
-                          </Link>
+                          <Typography sx={{ fontSize: "sm" }}>
+                            <Link
+                              component="button"
+                              underline="none"
+                              sx={{
+                                fontSize: "sm",
+                                color: "text.tertiary",
+                                marginRight: 2,
+                              }}
+                            >
+                              {product.productStatus === ProductStatus.PROCESS
+                                ? "Sell:"
+                                : "Sold out"}
+                            </Link>{" "}
+                            {product.productPrice}$
+                          </Typography>
                           <Link
                             component="button"
                             underline="none"
@@ -538,6 +478,9 @@ export default function Products(props: ProductsProps) {
       <div className={"brands-logo"}>
         <Box className="brand-text">Our Animals Family</Box>
         <Stack className="brand-cards">
+          <Box className="brand-video">
+            <video autoPlay muted loop playsInline src="/video/pet.mp4" />
+          </Box>
           <Box className="brand-card">
             <img src="/img/others/6.jpg" alt="" />
           </Box>
@@ -550,6 +493,9 @@ export default function Products(props: ProductsProps) {
           <Box className="brand-card">
             <img src="/img/others/8.jpg" alt="" />
           </Box>
+          <Box className="brand-video">
+            <video autoPlay muted loop playsInline src="/video/cat&boy.mp4" />
+          </Box>
         </Stack>
       </div>
       <div className={"address"}>
@@ -557,7 +503,6 @@ export default function Products(props: ProductsProps) {
         <Container>
           <Box className="address-area">
             <iframe
-              style={{ marginTop: "60px" }}
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6919.797538763219!2d127.94381393396152!3d37.32495849246551!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x356375bf121c3f79%3A0x1eac894dee1c07c6!2sWonju%20City%20Central%20Library!5e0!3m2!1sen!2skr!4v1712350784388!5m2!1sen!2skr"
               width="1300"
               height="568"
