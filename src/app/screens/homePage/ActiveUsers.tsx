@@ -25,7 +25,6 @@ export default function ActiveUsers() {
               {topUsers.length !== 0 ? (
                 topUsers.map((member: Member) => {
                   const imagePath = `${serverApi}/${member.memberImages}`;
-
                   return (
                     <Card
                       key={member._id}
@@ -34,18 +33,25 @@ export default function ActiveUsers() {
                     >
                       <CardOverflow>
                         <AspectRatio ratio="1">
-                          <img src={imagePath} alt="" />
+                          <img
+                            className="img-user"
+                            src={
+                              member.memberImages
+                                ? imagePath
+                                : "/icons/default-user.svg"
+                            }
+                            alt=""
+                          />
                         </AspectRatio>
                       </CardOverflow>
-
                       <CardOverflow variant="soft" className="user-detail">
-                        <Stack className="info">
-                          <Stack flexDirection="row">
-                            <Typography className={"member-nickname"}>
-                              {member.memberNick}
-                            </Typography>
-                          </Stack>
-                          <Stack></Stack>
+                        <Stack className="info" flexDirection="row">
+                          <Typography className={"member-nickname"}>
+                            {member.memberNick}
+                          </Typography>
+                          <Typography className={"member-order"}>
+                            Points: {member.memberPoints}
+                          </Typography>
                         </Stack>
                       </CardOverflow>
                     </Card>

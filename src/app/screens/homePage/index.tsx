@@ -11,7 +11,6 @@ import { Dispatch } from "@reduxjs/toolkit";
 import { setNewAnimals, setPopularAnimals, setTopUsers } from "./slice";
 import { Product } from "../../../lib/types/product";
 import ProductService from "../../services/ProductService";
-import { ProductCollection } from "../../../lib/enums/product.enum";
 import MemberService from "../../services/MemberService";
 import { Member } from "../../../lib/types/member";
 import "../../../css/home.css";
@@ -22,7 +21,6 @@ const actionDispatch = (dispatch: Dispatch) => ({
   setNewAnimals: (data: Product[]) => dispatch(setNewAnimals(data)),
   setTopUsers: (data: Member[]) => dispatch(setTopUsers(data)),
 });
-
 export default function HomePage() {
   // Selector: Store => Data
   const { setPopularAnimals, setNewAnimals, setTopUsers } = actionDispatch(
@@ -38,7 +36,6 @@ export default function HomePage() {
         page: 1,
         limit: 4,
         order: "productViews",
-        productCollection: ProductCollection.CAT,
       })
       .then((data) => {
         // BACKEND DATA FETCH=> data
@@ -51,7 +48,6 @@ export default function HomePage() {
         page: 1,
         limit: 4,
         order: "createdAt",
-        productCollection: ProductCollection.CAT,
       })
       .then((data) => {
         console.log("data passed here", data);

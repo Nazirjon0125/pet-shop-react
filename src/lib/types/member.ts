@@ -11,6 +11,7 @@ export interface Member {
   memberDesc?: string;
   memberImages?: string;
   memberPoints: number;
+  memberOrder: number;
   createdat: Date;
   updatedAt: Date;
 }

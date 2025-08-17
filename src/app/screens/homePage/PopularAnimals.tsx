@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Button, Container, Stack } from "@mui/material";
 import Card from "@mui/joy/Card";
 import CardCover from "@mui/joy/CardCover";
 import CardContent from "@mui/joy/CardContent";
@@ -13,8 +13,6 @@ import { createSelector } from "reselect";
 import { retrievePopularAnimals } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { serverApi } from "../../../lib/config";
-import { CreateNewFolder, Favorite, Visibility } from "@mui/icons-material";
-import { AspectRatio, Avatar, Chip, IconButton, Link } from "@mui/joy";
 
 /* REDUX SELECTOR */
 const popularAnimalsRetriever = createSelector(

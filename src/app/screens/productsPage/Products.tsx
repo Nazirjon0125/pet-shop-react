@@ -30,6 +30,10 @@ import SendOutlined from "@mui/icons-material/SendOutlined";
 import Face from "@mui/icons-material/Face";
 import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
 import { CssVarsProvider } from "@mui/joy/styles";
+import Pagination from "@mui/material/Pagination";
+import PaginationItem from "@mui/material/PaginationItem";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 /* REDUX SLICE & SELECTOR */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -51,7 +55,6 @@ export default function Products(props: ProductsProps) {
     page: 1,
     limit: 8,
     order: "createdAt",
-    productCollection: ProductCollection.CAT,
     search: "",
   });
 
@@ -135,91 +138,166 @@ export default function Products(props: ProductsProps) {
               </Button>
             </Box>
           </Stack>
-          <Box className="top-text">Pets for Sale</Box>
+          <Box className="top-title">Pets for Sale</Box>
           <Stack className={"animals-filter-box"}>
             <Stack className="category-box">
               <Button
+                className="img-box"
                 variant="contained"
-                color={
-                  productSearch.productCollection === ProductCollection.CAT
-                    ? "primary"
-                    : "secondary"
-                }
+                sx={{
+                  backgroundColor:
+                    productSearch.productCollection === ProductCollection.CAT
+                      ? "#757575"
+                      : "#237803",
+                  color: "757575", // matn rangi
+                  "&:hover": {
+                    backgroundColor:
+                      productSearch.productCollection === ProductCollection.CAT
+                        ? "#237803"
+                        : "#757575",
+                  },
+                }}
                 onClick={() => searchCollectionHandler(ProductCollection.CAT)}
               >
-                Cat
+                <img className="image" src="/icons/cats.png" alt="" />
+                <p>Cat</p>
               </Button>
               <Button
+                className="img-box"
                 variant="contained"
-                color={
-                  productSearch.productCollection === ProductCollection.DOG
-                    ? "primary"
-                    : "secondary"
-                }
+                sx={{
+                  backgroundColor:
+                    productSearch.productCollection === ProductCollection.DOG
+                      ? "#f57c00"
+                      : "#9e9e9e",
+                  color: "757575", // matn rangi
+                  "&:hover": {
+                    backgroundColor:
+                      productSearch.productCollection === ProductCollection.DOG
+                        ? "#ef6c00"
+                        : "#757575",
+                  },
+                }}
                 onClick={() => searchCollectionHandler(ProductCollection.DOG)}
               >
-                Dog
+                <img className="image" src="/icons/dogs.png" alt="" />
+                <p>Dog</p>
               </Button>
               <Button
+                className="img-box"
                 variant="contained"
-                color={
-                  productSearch.productCollection === ProductCollection.PARROT
-                    ? "primary"
-                    : "secondary"
-                }
+                sx={{
+                  backgroundColor:
+                    productSearch.productCollection === ProductCollection.PARROT
+                      ? "#f57c00"
+                      : "#9e9e9e",
+                  color: "757575", // matn rangi
+                  "&:hover": {
+                    backgroundColor:
+                      productSearch.productCollection ===
+                      ProductCollection.PARROT
+                        ? "#ef6c00"
+                        : "#757575",
+                  },
+                }}
                 onClick={() =>
                   searchCollectionHandler(ProductCollection.PARROT)
                 }
               >
-                Parrot
+                <img className="image" src="/icons/parrot.png" alt="" />
+                <p>Parrot</p>
               </Button>
               <Button
+                className="img-box"
                 variant="contained"
-                color={
-                  productSearch.productCollection === ProductCollection.HAMSTER
-                    ? "primary"
-                    : "secondary"
-                }
+                sx={{
+                  backgroundColor:
+                    productSearch.productCollection === ProductCollection.PARROT
+                      ? "#f57c00"
+                      : "#9e9e9e",
+                  color: "757575", // matn rangi
+                  "&:hover": {
+                    backgroundColor:
+                      productSearch.productCollection ===
+                      ProductCollection.PARROT
+                        ? "#ef6c00"
+                        : "#757575",
+                  },
+                }}
                 onClick={() =>
                   searchCollectionHandler(ProductCollection.HAMSTER)
                 }
               >
-                Hamster
+                <img className="image" src="/icons/hamster.png" alt="" />
+                <p>Hamster</p>
               </Button>
               <Button
+                className="img-box"
                 variant="contained"
-                color={
-                  productSearch.productCollection === ProductCollection.TURTLE
-                    ? "primary"
-                    : "secondary"
-                }
+                sx={{
+                  backgroundColor:
+                    productSearch.productCollection === ProductCollection.PARROT
+                      ? "#f57c00"
+                      : "#9e9e9e",
+                  color: "757575", // matn rangi
+                  "&:hover": {
+                    backgroundColor:
+                      productSearch.productCollection ===
+                      ProductCollection.PARROT
+                        ? "#ef6c00"
+                        : "#757575",
+                  },
+                }}
                 onClick={() =>
                   searchCollectionHandler(ProductCollection.TURTLE)
                 }
               >
-                Turtle
+                <img className="image" src="/icons/turtle.png" alt="" />
+                <p>Turtle</p>
               </Button>
               <Button
+                className="img-box"
                 variant="contained"
-                color={
-                  productSearch.productCollection === ProductCollection.FISH
-                    ? "primary"
-                    : "secondary"
-                }
+                sx={{
+                  backgroundColor:
+                    productSearch.productCollection === ProductCollection.PARROT
+                      ? "#f57c00"
+                      : "#9e9e9e",
+                  color: "757575", // matn rangi
+                  "&:hover": {
+                    backgroundColor:
+                      productSearch.productCollection ===
+                      ProductCollection.PARROT
+                        ? "#ef6c00"
+                        : "#757575",
+                  },
+                }}
                 onClick={() => searchCollectionHandler(ProductCollection.FISH)}
               >
-                Fish
+                <img className="image" src="/icons/fish.png" alt="" />
+                <p>Fish</p>
               </Button>
               <Button
+                className="img-box"
                 variant="contained"
-                color={
-                  productSearch.productCollection === ProductCollection.OTHER
-                    ? "primary"
-                    : "secondary"
-                }
+                sx={{
+                  backgroundColor:
+                    productSearch.productCollection === ProductCollection.PARROT
+                      ? "#f57c00"
+                      : "#9e9e9e",
+                  color: "757575", // matn rangi
+                  "&:hover": {
+                    backgroundColor:
+                      productSearch.productCollection ===
+                      ProductCollection.PARROT
+                        ? "#ef6c00"
+                        : "#757575",
+                  },
+                }}
                 onClick={() => searchCollectionHandler(ProductCollection.OTHER)}
               >
-                Other
+                <img className="image" src="/icons/dogs.png" alt="" />
+                <p>Other</p>
               </Button>
             </Stack>
             <Stack className="filter-box">
@@ -277,10 +355,10 @@ export default function Products(props: ProductsProps) {
                       ? product.productSize
                       : product.productYear;
                   return (
-                    <div key={product._id}>
+                    <Stack key={product._id}>
                       <Card
                         onClick={() => chooseAnimalsHandler(product._id)}
-                        className="card"
+                        className="product-card"
                         variant="outlined"
                         sx={{
                           minWidth: 300,
@@ -291,6 +369,20 @@ export default function Products(props: ProductsProps) {
                           <AspectRatio>
                             <img src={imagePath} alt="" loading="lazy" />
                           </AspectRatio>
+                          <Box
+                            onClick={(e) => {
+                              onAdd({
+                                _id: product._id,
+                                quantity: 1,
+                                name: product.productName,
+                                price: product.productPrice,
+                                image: product.productImages[0],
+                              });
+                              e.stopPropagation();
+                            }}
+                          >
+                            <img src="/icons/shopping-card.svg" alt="" />
+                          </Box>
                         </CardOverflow>
                         <CardContent
                           orientation="horizontal"
@@ -412,43 +504,7 @@ export default function Products(props: ProductsProps) {
                           </Link>
                         </CardContent>
                       </Card>
-                    </div>
-                    // <Stack key={product._id}>
-                    //   <Stack
-                    //     className={"product-img"}
-                    //     sx={{
-                    //       backgroundImage: `url(${imagePath})`,
-                    //       backgroundRepeat: "no-repeat",
-                    //       backgroundPosition: "center",
-                    //       backgroundSize: "cover",
-                    //     }}
-                    //   >
-                    //     <div className={"product-sale"}>{sizeVolume}</div>
-                    //
-                    //     <Button className={"view-btn"} sx={{ right: "36px" }}>
-                    //       <Badge
-                    //         badgeContent={product.productViews}
-                    //         color="secondary"
-                    //       >
-                    //         <RemoveRedEyeIcon
-                    //           sx={{
-                    //             color:
-                    //               product.productViews === 0 ? "gray" : "white",
-                    //           }}
-                    //         />
-                    //       </Badge>
-                    //     </Button>
-                    //   </Stack>
-                    //   <Box className={"product-desc"}>
-                    //     <span className={"product-title"}>
-                    //       {product.productName}
-                    //     </span>
-                    //     <div className={"product-price"}>
-                    //       <MonetizationOnIcon />
-                    //       {product.productPrice}
-                    //     </div>
-                    //   </Box>
-                    // </Stack>
+                    </Stack>
                   );
                 })
               ) : (
@@ -456,10 +512,31 @@ export default function Products(props: ProductsProps) {
               )}
             </CssVarsProvider>
           </Stack>
+          <Stack className={"pagination-section"} spacing={2}>
+            <Pagination
+              count={
+                products.length !== 0
+                  ? productSearch.page + 1
+                  : productSearch.page
+              }
+              page={productSearch.page}
+              renderItem={(item) => (
+                <PaginationItem
+                  slots={{
+                    previous: ArrowBackIcon,
+                    next: ArrowForwardIcon,
+                  }}
+                  {...item}
+                  color="secondary"
+                />
+              )}
+              onChange={paginationHandler}
+            />
+          </Stack>
         </Stack>
       </Container>
       <div className={"brands-logo"}>
-        <Box className="brand-text">Our Family Brands</Box>
+        <Box className="brand-text">Our Animals Family</Box>
         <Stack className="brand-cards">
           <Box className="brand-card">
             <img src="/img/others/6.jpg" alt="" />

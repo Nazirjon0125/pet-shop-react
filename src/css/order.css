@@ -135,6 +135,10 @@
   color: #434141;
 }
 
+/* .order-page .order-info-box .card-input:hover {
+  box-shadow: #000000;
+} */
+
 .order-page .order-info-box div {
   display: flex;
   justify-content: space-between;

@@ -65,14 +65,16 @@
 }
 
 .homepage .popular-animals-frame .popular-section .category-title {
+  font-family: "Dancing Script", cursive;
+  font-weight: 700;
+  font-size: 42px;
+  line-height: 52px;
+  color: #1a2a6c;
+  margin-bottom: 30px;
   text-align: center;
-  font-family: "Roboto Serif";
-  font-size: 36px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  letter-spacing: 1px;
-  color: #000;
+  background: linear-gradient(90deg, #1a2a6c, #b21f1f, #fdbb2d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .homepage .popular-animals-frame .popular-section .card-frame {
@@ -127,23 +129,28 @@
 .homepage .new-products-frame {
   width: 100%;
   height: 630px;
+  margin-top: 45px;
   background: #f8f8ff;
   display: flex;
 }
 
 .homepage .main {
-  margin-top: 45px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .homepage .new-products-frame .category-title {
-  font-family: "Dancing Script";
-  font-style: normal;
+  font-family: "Dancing Script", cursive;
   font-weight: 700;
-  font-size: 36px;
-  line-height: 43px;
+  font-size: 42px;
+  line-height: 52px;
+  color: #1a2a6c;
+  margin-bottom: 30px;
+  text-align: center;
+  background: linear-gradient(90deg, #1a2a6c, #b21f1f, #fdbb2d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .homepage .new-products-frame .main .card-frame {
@@ -212,7 +219,7 @@
   align-items: center;
 }
 
-.homepage .new-products-frame .product-detail .titel {
+.homepage .new-products-frame .product-detail .title {
   width: 65px;
   font-weight: 500;
 }
@@ -255,7 +262,7 @@
 .homepage .ads-restaurant-frame {
   width: 100%;
   height: 693px;
-  margin-top: 20px;
+  margin-top: 45px;
   display: flex;
   overflow: hidden;
   transform: perspective(0px);
@@ -275,79 +282,116 @@
 
 .homepage .active-users-frame {
   width: 100%;
-  height: auto;
+  min-height: 605px;
+  background: linear-gradient(120deg, #f9f9ff, #f0f4ff);
   display: flex;
-}
-
-.homepage .active-users-frame .main {
-  width: 100%;
-  height: 550px;
-}
-
-.homepage .active-users-frame .category-title {
-  margin-top: 45px;
-  width: 214px;
-  height: 31.71px;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  font-family: "Roboto Serif";
-  font-size: 36px;
-  font-weight: 600;
-  line-height: 42px;
-  text-align: left;
-  color: rgb(52, 52, 52);
-}
-
-.homepage .cards-frame {
-  margin-top: 56.63px;
-  width: 1262px;
-  height: 302.26px;
-
-  display: flex;
-  flex-direction: row;
-  gap: 30px;
-  align-items: center;
-}
-
-.homepage .cards-frame .card {
-  width: 305px;
-  height: 340px;
-  background-color: rgb(255, 255, 255);
-  border-radius: 12px;
-  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.08);
-}
-
-.homepage .cards-frame .member-nickname {
-  width: 305px;
-  height: 27px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   justify-content: center;
-
-  font-family: "Roboto Serif";
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 14px;
-  text-align: center;
+  align-items: flex-start;
+  padding: 40px 0;
 }
 
-.homepage .cards-frame .no-data {
-  width: 1190px;
-  height: 500px;
+/* Title */
+.active-users-frame .category-title {
+  font-family: "Dancing Script", cursive;
+  font-weight: 700;
+  font-size: 42px;
+  margin-bottom: 25px;
+  text-align: center;
+  color: #1a2a6c;
+}
+
+/* Cards container */
+.active-users-frame .cards-frame {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 25px;
+}
+
+/* User card */
+.active-users-frame .card {
+  width: 260px;
+  height: 320px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.active-users-frame .card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+/* User image */
+.active-users-frame .card .img-user {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.active-users-frame .card:hover .img-user {
+  transform: scale(1.08);
+}
+
+/* User detail */
+.active-users-frame .user-detail {
+  flex: 1;
+  background: #fafbfb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* Nickname + Points */
+.active-users-frame .user-detail .info {
+  width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 6px;
+}
+
+.active-users-frame .member-nickname {
+  font-family: "Roboto Serif", serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.active-users-frame .member-order {
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #fff;
+  background: linear-gradient(90deg, #1a2a6c, #b21f1f);
+  padding: 4px 12px;
+  border-radius: 12px;
+}
+
+/* No data */
+.homepage .active-users-frame .no-data {
+  width: 100%;
+  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-transform: capitalize;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 34px;
+  font-family: "Poppins", sans-serif;
+  font-size: 28px;
+  font-weight: 500;
   color: #e3c08d;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #fffaf5, #fff3e0);
+  box-shadow: inset 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 /** EVENTS **/
@@ -360,12 +404,16 @@
 }
 
 .homepage .events-frame .category-title {
-  font-family: "Dancing Script";
-  font-style: normal;
+  font-family: "Dancing Script", cursive;
   font-weight: 700;
-  font-size: 36px;
-  line-height: 43px;
-  padding-top: 20px;
+  font-size: 42px;
+  line-height: 52px;
+  color: #1a2a6c;
+  margin-bottom: 30px;
+  text-align: center;
+  background: linear-gradient(90deg, #1a2a6c, #b21f1f, #fdbb2d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .homepage .events-frame .events-main {
