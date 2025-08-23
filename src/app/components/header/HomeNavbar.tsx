@@ -134,7 +134,7 @@ export default function HomeNavbar(props: HomeNavbarProps) {
                   className={"btn login-btn"}
                   onClick={() => setSignupOpen(true)}
                 >
-                  SIGN UP
+                  Sign up
                 </Button>
               </Box>
             ) : (
@@ -194,7 +194,6 @@ export default function HomeNavbar(props: HomeNavbarProps) {
             </Menu>
           </Stack>
         </Stack>
-        <Stack className={"header-frame"}></Stack>
       </Container>
     </div>
   );

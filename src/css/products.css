@@ -234,18 +234,31 @@
 
 .products-page .products .product-wrapper .product-card {
   min-width: 300px;
-  min-height: 420px;
-  box-shadow: 9px 13px 14px 5px rgba(0, 0, 0, 0.25),
-    inset -1px 2px 10px 3px rgba(0, 0, 0, 0.25);
-  border-radius: 16px;
+  min-height: 380px;
+  background: linear-gradient(40deg, #ffffff, #bf6923);
+  border: 2px solid #e6b17e; /* gold border */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15),
+    inset 0 2px 6px rgba(255, 255, 255, 0.6);
+  border-radius: 18px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   overflow: hidden;
   cursor: pointer;
+  position: relative;
+}
+
+/* Hover effekti */
+.products-page .products .product-wrapper .product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2),
+    inset 0 3px 8px rgba(255, 255, 255, 0.7);
+  border-color: #f1c27d;
 }
 
 .products-page .products .product-card .product-image-box .product-sale {
   position: absolute;
-  width: 90px;
+  width: auto;
   height: 30px;
+  padding: 3px;
   flex-shrink: 0;
   border-radius: 25px;
   background: #ff9200;
@@ -269,8 +282,8 @@
   .product-image-box
   .shop-btn {
   position: absolute;
-  bottom: 230px;
-  right: 30px;
+  bottom: 15px;
+  right: 15px;
   background: #ff5722;
   border-radius: 15px;
   padding: 10px;

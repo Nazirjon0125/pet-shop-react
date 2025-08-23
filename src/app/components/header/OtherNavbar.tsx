@@ -110,13 +110,20 @@ export default function OtherNavbar(props: OtherNavbarProps) {
               onDeleteAll={onDeleteAll}
             />
             {!authMember ? (
-              <Box>
+              <Box className="btn login-btn">
                 <Button
                   variant="contained"
-                  className="login-btn"
+                  className={"btn login-btn"}
                   onClick={() => setLoginOpen(true)}
                 >
                   Login
+                </Button>
+                <Button
+                  variant={"contained"}
+                  className={"btn login-btn"}
+                  onClick={() => setSignupOpen(true)}
+                >
+                  Sign up
                 </Button>
               </Box>
             ) : (

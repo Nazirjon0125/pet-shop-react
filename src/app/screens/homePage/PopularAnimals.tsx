@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Container, Stack } from "@mui/material";
 import Card from "@mui/joy/Card";
 import CardCover from "@mui/joy/CardCover";
@@ -8,11 +8,18 @@ import { CssVarsProvider } from "@mui/joy/styles";
 import CardOverflow from "@mui/joy/CardOverflow";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { retrievePopularAnimals } from "./selector";
-import { Product } from "../../../lib/types/product";
+import { Product, ProductInquiry } from "../../../lib/types/product";
 import { serverApi } from "../../../lib/config";
+import { ProductStatus } from "../../../lib/enums/product.enum";
+import { CartItem } from "../../../lib/types/search";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setPopularAnimals } from "./slice";
+import ProductService from "../../services/ProductService";
+
+import SearchIcon from "@mui/icons-material/Search";
 
 /* REDUX SELECTOR */
 const popularAnimalsRetriever = createSelector(
@@ -20,7 +27,12 @@ const popularAnimalsRetriever = createSelector(
   (popularAnimals) => ({ popularAnimals })
 );
 
-export default function PopularAnimals() {
+interface PopularAnimalsProps {
+  onAdd: (item: CartItem) => void;
+}
+
+export default function PopularAnimals(props: PopularAnimalsProps) {
+  const { onAdd } = props;
   const { popularAnimals } = useSelector(popularAnimalsRetriever);
 
   console.log("popularAnimals", popularAnimals);
@@ -33,6 +45,8 @@ export default function PopularAnimals() {
             <CssVarsProvider>
               {popularAnimals.length !== 0 ? (
                 popularAnimals.map((product: Product) => {
+                  const isSoldOut =
+                    product.productStatus === ProductStatus.SOLDOUT;
                   const imagePath = `${serverApi}/${product.productImages[0]}`;
                   return (
                     <div key={product._id}>
@@ -40,6 +54,52 @@ export default function PopularAnimals() {
                         <CardCover>
                           <img src={imagePath} alt="" />
                         </CardCover>
+                        {isSoldOut && (
+                          <Box
+                            sx={{
+                              position: "absolute",
+                              top: 0,
+                              left: 0,
+                              width: "100%",
+                              height: "100%",
+                              bgcolor: "rgba(0,0,0,0.5)",
+                              color: "#fff",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: 24,
+                              fontWeight: "bold",
+                              borderRadius: 1,
+                            }}
+                          >
+                            SOLD OUT
+                          </Box>
+                        )}
+                        <Box
+                          className="shop-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (!isSoldOut) {
+                              onAdd({
+                                _id: product._id,
+                                quantity: 1,
+                                name: product.productName,
+                                price: product.productPrice,
+                                image: product.productImages[0],
+                              });
+                            }
+                          }}
+                          sx={{
+                            position: "absolute",
+                            zIndex: 10,
+                            opacity: isSoldOut ? 0.4 : 1,
+                            pointerEvents: isSoldOut ? "none" : "auto",
+                            cursor: "pointer",
+                          }}
+                        >
+                          <img src="/icons/shop.svg" alt="" />
+                        </Box>
+
                         <CardCover className={"card-cover"} />
                         <CardContent sx={{ justifyContent: "flex-end" }}>
                           <Stack

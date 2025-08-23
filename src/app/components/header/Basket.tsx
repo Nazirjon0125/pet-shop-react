@@ -72,7 +72,7 @@ export default function Basket(props: BasketProps) {
         onClick={handleClick}
       >
         <Badge badgeContent={cartItems.length} color="secondary">
-          <img src={"/icons/shopping-cart.svg"} />
+          <img src={"/icons/shop.svg"} />
         </Badge>
       </IconButton>
       <Menu
@@ -115,10 +115,10 @@ export default function Basket(props: BasketProps) {
             {cartItems.length === 0 ? (
               <div>Cart is empty!</div>
             ) : (
-              <Stack flexDirection={"row"}>
+              <Stack flexDirection={"row"} justifyContent={"space-between"}>
                 <div>Cart Products!</div>
                 <DeleteForeverIcon
-                  sx={{ ml: "5px" }}
+                  sx={{ ml: "290px" }}
                   color="primary"
                   onClick={() => onDeleteAll()}
                 />

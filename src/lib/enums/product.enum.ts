@@ -27,7 +27,7 @@ export enum ProductYear {
 export enum ProductStatus {
   PAUSE = "PAUSE",
   PROCESS = "PROCESS",
-  DELETE = "DELETE",
+  SOLDOUT = "SOLD-OUT",
 }
 
 export enum ProductCollection {

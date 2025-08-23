@@ -1,17 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Container, Stack } from "@mui/material";
 import AspectRatio from "@mui/joy/AspectRatio";
 import Card from "@mui/joy/Card";
 import CardOverflow from "@mui/joy/CardOverflow";
 import Typography from "@mui/joy/Typography";
 import { CssVarsProvider } from "@mui/joy/styles";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import Divider from "@mui/material/Divider";
-
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { retrieveNewAnimals } from "./selector";
-import { Product } from "../../../lib/types/product";
+import { Product, ProductInquiry } from "../../../lib/types/product";
 import { serverApi } from "../../../lib/config";
 import {
   ProductCollection,
@@ -19,13 +17,22 @@ import {
 } from "../../../lib/enums/product.enum";
 import { CardContent } from "@mui/joy";
 import dayjs from "dayjs";
+import { CartItem } from "../../../lib/types/search";
+import { Dispatch } from "@reduxjs/toolkit";
+import ProductService from "../../services/ProductService";
+import { setNewAnimals } from "./slice";
 
-/* REDUX SLICE & SELECTOR */
+/* REDUX SELECTOR */
 const newAnimalsRetriver = createSelector(retrieveNewAnimals, (newAnimals) => ({
   newAnimals,
 }));
 
-export default function NewAnimals() {
+interface NewAnimalsProps {
+  onAdd: (item: CartItem) => void;
+}
+
+export default function NewAnimals(props: NewAnimalsProps) {
+  const { onAdd } = props;
   const { newAnimals } = useSelector(newAnimalsRetriver);
 
   console.log("newAnimals", newAnimals);
@@ -39,13 +46,15 @@ export default function NewAnimals() {
               {newAnimals.length !== 0 ? (
                 newAnimals.map((product: Product) => {
                   const imagePath = `${serverApi}/${product.productImages[0]}`;
+                  const isSoldOut =
+                    product.productStatus === ProductStatus.SOLDOUT;
                   const sizeVolume =
                     product.productCollection === ProductCollection.FISH
                       ? product.productSize
                       : product.productYear;
                   const sale =
                     product.productStatus === ProductStatus.PROCESS
-                      ? product.productStatus
+                      ? "Sale"
                       : "sold out";
                   return (
                     <Card
@@ -58,6 +67,48 @@ export default function NewAnimals() {
                         <AspectRatio ratio="1">
                           <img src={imagePath} alt="" />
                         </AspectRatio>
+                        {isSoldOut && (
+                          <Box
+                            sx={{
+                              position: "absolute",
+                              top: 0,
+                              left: 0,
+                              width: "100%",
+                              height: "100%",
+                              bgcolor: "rgba(0,0,0,0.5)",
+                              color: "#fff",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: 24,
+                              fontWeight: "bold",
+                              borderRadius: 1,
+                            }}
+                          >
+                            SOLD OUT
+                          </Box>
+                        )}
+                        <Box
+                          className="shop-btn"
+                          onClick={(e) => {
+                            if (!isSoldOut) {
+                              onAdd({
+                                _id: product._id,
+                                quantity: 1,
+                                name: product.productName,
+                                price: product.productPrice,
+                                image: product.productImages[0],
+                              });
+                              e.stopPropagation();
+                            }
+                          }}
+                          sx={{
+                            opacity: isSoldOut ? 0.4 : 1,
+                            pointerEvents: isSoldOut ? "none" : "auto",
+                          }}
+                        >
+                          <img src="/icons/shop.svg" alt="" />
+                        </Box>
                       </CardOverflow>
                       <CardContent>
                         <Typography level="body-sm">

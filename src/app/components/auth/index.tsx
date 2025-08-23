@@ -12,6 +12,23 @@ import { LoginInput, MemberInput } from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
+import { Link } from "react-router-dom";
+
+const ModalImg = styled.img`
+  width: 60%;
+  height: auto;
+  border-radius: 20px;
+  object-fit: cover;
+  background: linear-gradient(135deg, #1a1a1a, #333);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  &:hover {
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+  }
+  margin-top: 10px;
+  margin-left: 10px;
+`;
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -20,20 +37,62 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 2, 2),
+    background: "rgba(255,255,255,0.9)",
+    backdropFilter: "blur(12px)",
+    borderRadius: "25px",
+    border: "none",
+    boxShadow: "0 20px 60px rgba(0,0,0,0.5)",
+    padding: theme.spacing(4),
+    animation: `$fadeIn 0.5s ease forwards`,
+  },
+  "@keyframes fadeIn": {
+    "0%": { opacity: 0, transform: "translateY(20px)" },
+    "100%": { opacity: 1, transform: "translateY(0)" },
   },
 }));
 
-const ModalImg = styled.img`
-  width: 62%;
-  height: 100%;
-  border-radius: 10px;
-  background: #000;
-  margin-top: 9px;
-  margin-left: 10px;
+// TextFieldlar uchun premium style
+const StyledTextField = styled(TextField)`
+  && {
+    margin: 12px 0;
+    width: 320px;
+    border-radius: 12px;
+    & label.Mui-focused {
+      color: #6a0dad;
+    }
+    & .MuiOutlinedInput-root {
+      & fieldset {
+        border-color: #bbb;
+        transition: all 0.3s ease;
+      }
+      &.Mui-focused fieldset {
+        border-color: #6a0dad;
+        box-shadow: 0 0 12px rgba(106, 13, 173, 0.4);
+      }
+      &:hover fieldset {
+        border-color: #8a2be2;
+      }
+    }
+  }
+`;
+
+// Fab button uchun premium gradient va hover animatsiya
+const GradientFab = styled(Fab)`
+  && {
+    margin-top: 30px;
+    width: 140px;
+    font-weight: bold;
+    background: linear-gradient(45deg, #6a0dad, #8a2be2);
+    color: #fff;
+    text-transform: none;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s ease;
+    &:hover {
+      transform: translateY(-3px) scale(1.05);
+      background: linear-gradient(45deg, #8a2be2, #6a0dad);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.45);
+    }
+  }
 `;
 
 interface AuthenticationModalProps {
@@ -138,7 +197,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
             direction={"row"}
             sx={{ width: "800px" }}
           >
-            <ModalImg src={"/img/auth.webp"} alt="camera" />
+            <ModalImg src={"/img/user/auth.jpg"} alt="camera" />
             <Stack sx={{ marginLeft: "69px", alignItems: "center" }}>
               <h2>Signup Form</h2>
               <TextField
@@ -163,9 +222,12 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                 onKeyDown={handlePasswordKeyDown}
               />
               <Fab
-                sx={{ marginTop: "30px", width: "120px" }}
+                sx={{
+                  marginTop: "30px",
+                  width: "120px",
+                  background: "#ff9200",
+                }}
                 variant="extended"
-                color="primary"
                 onClick={handleSingupRequest}
               >
                 <LoginIcon sx={{ mr: 1 }} />
@@ -194,7 +256,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
             direction={"row"}
             sx={{ width: "700px" }}
           >
-            <ModalImg src={"/img/auth.webp"} alt="camera" />
+            <ModalImg src={"/img/user/auth.jpg"} alt="camera" />
             <Stack
               sx={{
                 marginLeft: "65px",

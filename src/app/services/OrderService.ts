@@ -7,6 +7,7 @@ import {
   OrderUpdateInput,
 } from "../../lib/types/order";
 import { CartItem } from "../../lib/types/search";
+import { ProductStatus } from "../../lib/enums/product.enum";
 
 class OrderService {
   private readonly path: string;

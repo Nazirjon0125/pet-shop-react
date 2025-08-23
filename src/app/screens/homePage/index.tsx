@@ -14,6 +14,7 @@ import ProductService from "../../services/ProductService";
 import MemberService from "../../services/MemberService";
 import { Member } from "../../../lib/types/member";
 import "../../../css/home.css";
+import { CartItem } from "../../../lib/types/search";
 
 /* REDUX SLICE & SELECTOR */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -21,7 +22,11 @@ const actionDispatch = (dispatch: Dispatch) => ({
   setNewAnimals: (data: Product[]) => dispatch(setNewAnimals(data)),
   setTopUsers: (data: Member[]) => dispatch(setTopUsers(data)),
 });
-export default function HomePage() {
+interface HomePageProps {
+  onAdd: (item: CartItem) => void;
+}
+export default function HomePage(props: HomePageProps) {
+  const { onAdd } = props;
   // Selector: Store => Data
   const { setPopularAnimals, setNewAnimals, setTopUsers } = actionDispatch(
     useDispatch()
@@ -66,8 +71,8 @@ export default function HomePage() {
   return (
     <div className={"homepage"}>
       <Statistics />
-      <PopularAnimals />
-      <NewAnimals />
+      <PopularAnimals onAdd={onAdd} />
+      <NewAnimals onAdd={onAdd} />
       <Advertisement />
       <ActiveUsers />
       <Events />

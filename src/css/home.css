@@ -1,52 +1,94 @@
 .homepage {
   width: 100%;
   height: auto;
+  background: #f8f8ff;
 }
 
 /* STATISTICS */
+/* PREMIUM STATISTICS - LIGHT BACKGROUND */
 .homepage .static-frame {
+  position: relative;
   width: 100%;
-  height: 236px;
-  background: #343434;
+  height: 260px;
+  background: linear-gradient(135deg, #fff8e7, #f5e1b3, #e6c98b);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.homepage .static-frame::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.4) 0%,
+    transparent 70%
+  );
+  animation: shine 10s linear infinite;
+}
+
+@keyframes shine {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .homepage .static-frame .info {
-  height: 100%;
-
+  width: 100%;
+  max-width: 1300px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
+  z-index: 2;
 }
 
 .homepage .static-frame .info .static-box {
-  width: 200px;
-  height: 116px;
-
+  width: 220px;
+  height: 130px;
+  margin-top: 60px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.homepage .static-frame .info .static-box:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.25);
 }
 
 .homepage .static-frame .info .static-box .static-num {
   text-align: center;
-  font-family: "Poppins";
-  font-size: 54px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  color: #d7b686;
+  font-family: "Poppins", sans-serif;
+  font-size: 56px;
+  font-weight: 700;
+  color: #b8860b; /* dark goldenrod */
+  text-shadow: 0 0 10px rgba(184, 134, 11, 0.4);
 }
 
 .homepage .static-frame .info .static-box .static-text {
+  margin-top: 8px;
   text-align: center;
-  font-family: "Poppins";
+  font-family: "Poppins", sans-serif;
   font-size: 20px;
-  font-style: normal;
   font-weight: 500;
-  line-height: 30px;
-  color: #d7b586;
+  color: #333;
+  letter-spacing: 0.5px;
 }
 
 /* POPULAR DISHES */
@@ -109,6 +151,41 @@
     linear-gradient(top, rgba(0, 0, 0.8) rgba(0, 0, 0) 300px);
 }
 
+.homepage .popular-animals-frame .shop-btn {
+  position: absolute;
+  bottom: 20%;
+  right: 46%;
+  background: #ff5722;
+  border-radius: 15px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.homepage .popular-animals-frame .card:hover .shop-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.homepage .popular-animals-frame .shop-btn img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+.homepage .popular-animals-frame .shop-btn:hover {
+  background: #d85730;
+  transform: scale(1.1);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+}
+
 .homepage .popular-animals-frame .no-data {
   width: 100%;
   height: 300px;
@@ -129,7 +206,7 @@
 .homepage .new-products-frame {
   width: 100%;
   height: 630px;
-  margin-top: 45px;
+  margin-top: 70px;
   background: #f8f8ff;
   display: flex;
 }
@@ -257,25 +334,69 @@
   color: #e3c08d;
 }
 
+.homepage .new-products-frame .shop-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: #ff5722;
+  border-radius: 15px;
+  padding: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.homepage .new-products-frame .card:hover .shop-btn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.homepage .new-products-frame .shop-btn img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+.homepage .new-products-frame .shop-btn:hover {
+  background: #d85730;
+  transform: scale(1.1);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+}
+
 /* ADVERTISEMENT */
 
 .homepage .ads-restaurant-frame {
   width: 100%;
-  height: 693px;
-  margin-top: 45px;
+  height: 700px;
+  margin-top: 50px;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #1e1e1e, #2d2d2d);
+  border-radius: 25px;
   overflow: hidden;
-  transform: perspective(0px);
-  box-shadow: -3px 0px 20px 14px #34343480;
+  padding: 15px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4);
 }
 
 .homepage .ads-restaurant-frame .ads-video {
   width: 100%;
-  background: #0c0e12;
-  display: flex;
-  box-shadow: 0px -8px 90px rgba(215 215 255);
-  transform: scale(1.5);
-  overflow: hidden;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.6);
+  transition: transform 0.8s ease, box-shadow 0.8s ease;
+}
+
+.homepage .ads-restaurant-frame .ads-video:hover {
+  transform: scale(1.08);
+  box-shadow: 0px 20px 60px rgba(0, 0, 0, 0.8);
 }
 
 /* ACTIVE USERS */
@@ -286,11 +407,10 @@
   background: linear-gradient(120deg, #f9f9ff, #f0f4ff);
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   padding: 40px 0;
 }
 
-/* Title */
 .active-users-frame .category-title {
   font-family: "Dancing Script", cursive;
   font-weight: 700;
@@ -300,7 +420,6 @@
   color: #1a2a6c;
 }
 
-/* Cards container */
 .active-users-frame .cards-frame {
   display: flex;
   flex-direction: row;
@@ -309,7 +428,6 @@
   gap: 25px;
 }
 
-/* User card */
 .active-users-frame .card {
   width: 260px;
   height: 320px;
@@ -328,7 +446,6 @@
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
 }
 
-/* User image */
 .active-users-frame .card .img-user {
   width: 100%;
   height: 100%;
@@ -340,7 +457,6 @@
   transform: scale(1.08);
 }
 
-/* User detail */
 .active-users-frame .user-detail {
   flex: 1;
   background: #fafbfb;
@@ -351,7 +467,6 @@
   border-top: 1px solid #f0f0f0;
 }
 
-/* Nickname + Points */
 .active-users-frame .user-detail .info {
   width: 250px;
   display: flex;

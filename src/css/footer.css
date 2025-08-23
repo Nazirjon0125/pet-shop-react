@@ -1,7 +1,7 @@
 .footer-container {
   position: relative;
   width: 100%;
-  background: rgb(234, 72, 21);
+  background: linear-gradient(60deg, #f25a2c, #ff9200, #e65921);
   border-bottom: 1px solid rgba(239, 239, 239, 0.2);
 }
 .foot-desc-txt {

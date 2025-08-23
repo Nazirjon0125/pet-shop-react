@@ -1,15 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  Container,
-  Menu,
-  MenuItem,
-  Select,
-  Stack,
-} from "@mui/material";
+import { Box, Button, Container, MenuItem, Select, Stack } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
 import { setProducts } from "./slice";
@@ -24,22 +15,11 @@ import {
 import { serverApi } from "../../../lib/config";
 import { useNavigate } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
-
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";
 import Typography from "@mui/joy/Typography";
-import CardOverflow from "@mui/joy/CardOverflow";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import dayjs from "dayjs";
-import AspectRatio from "@mui/joy/AspectRatio";
 import Link from "@mui/joy/Link";
-import IconButton from "@mui/joy/IconButton";
-import Input from "@mui/joy/Input";
-import FavoriteBorder from "@mui/icons-material/FavoriteBorder";
-import ModeCommentOutlined from "@mui/icons-material/ModeCommentOutlined";
-import SendOutlined from "@mui/icons-material/SendOutlined";
-import Face from "@mui/icons-material/Face";
-import BookmarkBorderRoundedIcon from "@mui/icons-material/BookmarkBorderRounded";
 import { CssVarsProvider } from "@mui/joy/styles";
 import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
@@ -64,7 +44,7 @@ export default function Products(props: ProductsProps) {
   const { products } = useSelector(productsRetriever);
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
     page: 1,
-    limit: 12,
+    limit: 16,
     order: "createdAt",
     search: "",
   });
@@ -242,7 +222,7 @@ export default function Products(props: ProductsProps) {
                 }}
                 onClick={() => searchCollectionHandler(ProductCollection.OTHER)}
               >
-                <img className="image" src="/icons/dogs.png" alt="" />
+                <img className="image" src="/icons/rubbit.png" alt="" />
                 <p className="animals-name">Other</p>
               </Button>
             </Stack>
@@ -269,9 +249,11 @@ export default function Products(props: ProductsProps) {
               {products.length !== 0 ? (
                 products.map((product: Product) => {
                   const date = new Date(product.createdAt);
+                  const isSoldOut =
+                    product.productStatus === ProductStatus.SOLDOUT;
                   const formatted = date.toLocaleString("uz-UZ", {
                     year: "numeric",
-                    month: "long",
+                    month: "numeric",
                     day: "numeric",
                     hour: "2-digit",
                     minute: "2-digit",
@@ -281,6 +263,7 @@ export default function Products(props: ProductsProps) {
                     product.productCollection === ProductCollection.FISH
                       ? product.productSize
                       : product.productYear;
+
                   return (
                     <Stack key={product._id}>
                       <Card
@@ -288,84 +271,69 @@ export default function Products(props: ProductsProps) {
                         variant="outlined"
                         sx={{
                           minWidth: 300,
+                          position: "relative", // overlay chiqarish uchun
                           "--Card-radius": (theme) => theme.vars.radius.xs,
                         }}
                       >
-                        <Stack className="product-image-box">
+                        <Stack
+                          className="product-image-box"
+                          sx={{ position: "relative" }}
+                        >
                           <img
                             onClick={() => chooseAnimalsHandler(product._id)}
                             src={imagePath}
                             alt=""
                             loading="lazy"
+                            style={{
+                              filter: isSoldOut ? "grayscale(70%)" : "none",
+                            }}
                           />
                           <div className={"product-sale"}>{sizeVolume}</div>
+
+                          {/* Agar sold out bo‘lsa overlay chiqaramiz */}
+                          {isSoldOut && (
+                            <Box
+                              sx={{
+                                position: "absolute",
+                                top: 0,
+                                left: 0,
+                                width: "100%",
+                                height: "100%",
+                                bgcolor: "rgba(0,0,0,0.5)",
+                                color: "#fff",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                fontSize: 24,
+                                fontWeight: "bold",
+                                borderRadius: 1,
+                              }}
+                            >
+                              SOLD OUT
+                            </Box>
+                          )}
                           <Box
                             className="shop-btn"
                             onClick={(e) => {
-                              onAdd({
-                                _id: product._id,
-                                quantity: 1,
-                                name: product.productName,
-                                price: product.productPrice,
-                                image: product.productImages[0],
-                              });
-                              e.stopPropagation();
+                              if (!isSoldOut) {
+                                onAdd({
+                                  _id: product._id,
+                                  quantity: 1,
+                                  name: product.productName,
+                                  price: product.productPrice,
+                                  image: product.productImages[0],
+                                });
+                                e.stopPropagation();
+                              }
+                            }}
+                            sx={{
+                              opacity: isSoldOut ? 0.4 : 1,
+                              pointerEvents: isSoldOut ? "none" : "auto",
                             }}
                           >
                             <img src="/icons/shop.svg" alt="" />
                           </Box>
                         </Stack>
-                        <CardContent
-                          orientation="horizontal"
-                          sx={{ alignItems: "center", mx: -1 }}
-                        >
-                          <Box sx={{ width: 0, display: "flex", gap: 0.5 }}>
-                            <IconButton
-                              variant="plain"
-                              color="neutral"
-                              size="sm"
-                            >
-                              <FavoriteBorder />
-                            </IconButton>
-                            <IconButton
-                              variant="plain"
-                              color="neutral"
-                              size="sm"
-                            >
-                              <ModeCommentOutlined />
-                            </IconButton>
-                            <IconButton
-                              variant="plain"
-                              color="neutral"
-                              size="sm"
-                            >
-                              <SendOutlined />
-                            </IconButton>
-                          </Box>
-                          <Box
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 0.5,
-                              mx: "auto",
-                            }}
-                          ></Box>
-                          <Box
-                            sx={{
-                              width: 0,
-                              display: "flex",
-                              flexDirection: "row-reverse",
-                            }}
-                          >
-                            <IconButton
-                              variant="plain"
-                              color="neutral"
-                              size="sm"
-                            >
-                              <BookmarkBorderRoundedIcon />
-                            </IconButton>
-                          </Box>
-                        </CardContent>
                         <CardContent>
                           <Link
                             component="button"
@@ -373,12 +341,12 @@ export default function Products(props: ProductsProps) {
                             textColor="text.primary"
                             sx={{ fontSize: "sm", fontWeight: "lg" }}
                           >
+                            {" "}
                             {product.productViews}{" "}
                             <VisibilityIcon
                               sx={{ fontSize: 25, marginLeft: "5px" }}
-                            />
+                            />{" "}
                           </Link>
-
                           <Typography sx={{ fontSize: "sm" }}>
                             <Link
                               component="button"
@@ -386,11 +354,14 @@ export default function Products(props: ProductsProps) {
                               textColor="text.primary"
                               sx={{ fontWeight: "lg" }}
                             >
-                              {product.productName}
+                              {product.productName}:
                             </Link>{" "}
                             {product.productDesc}
                           </Typography>
-                          <Typography sx={{ fontSize: "sm" }}>
+                          <Typography
+                            justifyContent={"space-between"}
+                            sx={{ fontSize: "sm" }}
+                          >
                             <Link
                               component="button"
                               underline="none"
@@ -400,9 +371,7 @@ export default function Products(props: ProductsProps) {
                                 marginRight: 2,
                               }}
                             >
-                              {product.productStatus === ProductStatus.PROCESS
-                                ? "Sell:"
-                                : "Sold out"}
+                              {isSoldOut ? "Status: Sold out" : "Status: Sale"}
                             </Link>{" "}
                             {product.productPrice}$
                           </Typography>
@@ -415,32 +384,7 @@ export default function Products(props: ProductsProps) {
                               my: 0.5,
                             }}
                           >
-                            {dayjs(product.createdAt).format(
-                              "YYYY.MM.DD HH:mm"
-                            )}
-                          </Link>
-                        </CardContent>
-                        <CardContent orientation="horizontal" sx={{ gap: 1 }}>
-                          <IconButton
-                            size="sm"
-                            variant="plain"
-                            color="neutral"
-                            sx={{ ml: -1 }}
-                          >
-                            <Face />
-                          </IconButton>
-                          <Input
-                            variant="plain"
-                            size="sm"
-                            placeholder="Add a comment…"
-                            sx={{
-                              flex: 1,
-                              px: 0,
-                              "--Input-focusedThickness": "0px",
-                            }}
-                          />
-                          <Link disabled underline="none" role="button">
-                            Post
+                            {formatted}
                           </Link>
                         </CardContent>
                       </Card>
@@ -452,6 +396,7 @@ export default function Products(props: ProductsProps) {
               )}
             </CssVarsProvider>
           </Stack>
+
           <Stack className={"pagination-section"} spacing={2}>
             <Pagination
               count={
@@ -482,16 +427,16 @@ export default function Products(props: ProductsProps) {
             <video autoPlay muted loop playsInline src="/video/pet.mp4" />
           </Box>
           <Box className="brand-card">
-            <img src="/img/others/6.jpg" alt="" />
+            <img src="/img/cat/catfamily.jpg" alt="" />
           </Box>
           <Box className="brand-card">
-            <img src="/img/others/7.jpg" alt="" />
+            <img src="/img/dog/dogfamily.jpg" alt="" />
           </Box>
           <Box className="brand-card">
-            <img src="/img/others/9.jpg" alt="" />
+            <img src="/img/fish/fishfamly.jpg" alt="" />
           </Box>
           <Box className="brand-card">
-            <img src="/img/others/8.jpg" alt="" />
+            <img src="/img/parrot/parrotfamily.jpg" alt="" />
           </Box>
           <Box className="brand-video">
             <video autoPlay muted loop playsInline src="/video/cat&boy.mp4" />
