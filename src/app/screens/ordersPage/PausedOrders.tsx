@@ -1,8 +1,7 @@
 import React from "react";
-import { Box, Stack } from "@mui/material";
-import Button from "@mui/material/Button";
+import { Box, Stack, Button } from "@mui/material";
 import TabPanel from "@mui/lab/TabPanel";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { createSelector } from "reselect";
 import { retrievePausedOrders } from "./selector";
 import { Message, serverApi } from "../../../lib/config";
@@ -13,13 +12,18 @@ import { OrderStatus } from "../../../lib/enums/order.enum";
 import { useGlobals } from "../../hooks/useGlobals";
 import OrderService from "../../services/OrderService";
 import { T } from "../../../lib/types/common";
+import { setProducts } from "../productsPage/slice";
+import { retrieveProducts } from "../productsPage/selector";
 
-/** REDUX SLICE & SELECTOR **/
-
+/** REDUX SELECTORS **/
 const pausedOrderRetriever = createSelector(
   retrievePausedOrders,
   (pausedOrders) => ({ pausedOrders })
 );
+
+const productsRetriever = createSelector(retrieveProducts, (products) => ({
+  products,
+}));
 
 interface PausedOrdersProps {
   setValue: (input: string) => void;
@@ -27,75 +31,143 @@ interface PausedOrdersProps {
 
 export default function PausedOrders(props: PausedOrdersProps) {
   const { setValue } = props;
+  const dispatch = useDispatch();
   const { authMember, setOrderBuilder } = useGlobals();
   const { pausedOrders } = useSelector(pausedOrderRetriever);
+  const { products } = useSelector(productsRetriever);
+
+  /** REDUX ACTIONS **/
+  const updateProductsStore = (newProducts: Product[]) => {
+    dispatch(setProducts(newProducts));
+  };
 
   /** HANDLERS **/
 
-  // deleteOrderHandler
+  // Delete order
   const deleteOrderHandler = async (e: T) => {
     try {
       if (!authMember) throw new Error(Message.error2);
       const orderId = e.target.value;
-      const input: OrderUpdateInput = {
-        orderId: orderId,
-        orderStatus: OrderStatus.DELETE,
-      };
-
       const confirmation = window.confirm("Do you want to delete the order?");
-      if (confirmation) {
-        const order = new OrderService();
-        await order.updateOrder(input);
-        setOrderBuilder(new Date());
-      }
+      if (!confirmation) return;
+
+      const orderService = new OrderService();
+      await orderService.updateOrder({
+        orderId,
+        orderStatus: OrderStatus.DELETE,
+      });
+
+      setOrderBuilder(new Date());
     } catch (err) {
-      console.log(err);
+      console.error(err);
       sweetErrorHandling(err).then();
     }
   };
 
-  // processOrderHandler
+  // Buy product / decrement leftCount
+  const handleBuyProduct = async (productId: string) => {
+    try {
+      const res = await fetch(`${serverApi}/product/decrement/${productId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!res.ok) throw new Error("Failed to decrement product");
+
+      const updatedProduct: Product = await res.json();
+
+      // Redux store update
+      const newProducts = products.map((p: Product) =>
+        p._id === updatedProduct._id ? updatedProduct : p
+      );
+      updateProductsStore(newProducts);
+
+      console.log("Updated product:", updatedProduct);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Process payment and decrement products
   const processOrderHandler = async (e: T) => {
     try {
       if (!authMember) throw new Error(Message.error2);
-      // PAYMENT PROCESS
-      const orderId = e.target.value;
-      const input: OrderUpdateInput = {
-        orderId: orderId,
-        orderStatus: OrderStatus.PROCESS,
-      };
 
+      const orderId = e.target.value;
       const confirmation = window.confirm(
         "Do you want to proceed with payment?"
       );
-      if (confirmation) {
-        const order = new OrderService();
-        await order.updateOrder(input);
-        setValue("2");
-        setOrderBuilder(new Date());
+      if (!confirmation) return;
+
+      // 1️⃣ Update order status
+      const orderService = new OrderService();
+      await orderService.updateOrder({
+        orderId,
+        orderStatus: OrderStatus.PROCESS,
+      });
+
+      // 2️⃣ Decrement product leftCount for each item
+      const order = pausedOrders.find((o) => o._id === orderId);
+      if (order) {
+        for (const item of order.orderItems) {
+          await handleBuyProduct(item.productId);
+        }
       }
+
+      // 3️⃣ Refresh UI and switch tab
+      setValue("2");
+      setOrderBuilder(new Date());
     } catch (err) {
-      console.log(err);
+      console.error(err);
       sweetErrorHandling(err).then();
     }
   };
 
   return (
     <TabPanel value={"1"}>
-      <Stack>
-        {pausedOrders?.map((order: Order) => {
-          return (
+      <Stack spacing={2}>
+        {pausedOrders?.length ? (
+          pausedOrders.map((order: Order) => (
             <Box key={order._id} className={"order-main-box"}>
               <Box className={"order-box-scroll"}>
-                {order?.orderItems?.map((item: OrderItem) => {
-                  const product: Product = order.productData.filter(
+                {order.orderItems.map((item: OrderItem) => {
+                  const product: Product = order.productData.find(
                     (ele: Product) => item.productId === ele._id
-                  )[0];
+                  )!;
                   const imagePath = `${serverApi}/${product.productImages[0]}`;
+                  const isSoldOut =
+                    product.productStatus === "SOLD-OUT" ||
+                    product.productLeftCount === 0;
+
                   return (
                     <Box key={item._id} className={"orders-name-price"}>
-                      <img src={imagePath} className={"order-dish-img"} />
-
+                      <img
+                        src={imagePath}
+                        className={"order-dish-img"}
+                        style={{
+                          filter: isSoldOut ? "grayscale(70%)" : "none",
+                        }}
+                      />
+                      {isSoldOut && (
+                        <Box
+                          sx={{
+                            position: "absolute",
+                            top: 0,
+                            left: 0,
+                            width: "100%",
+                            height: "100%",
+                            bgcolor: "rgba(0,0,0,0.5)",
+                            color: "#fff",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: 24,
+                            fontWeight: "bold",
+                          }}
+                        >
+                          SOLD OUT
+                        </Box>
+                      )}
                       <p className={"title-dish"}>{product.productName}</p>
                       <Box className={"price-box"}>
                         <p>${item.itemPrice}</p>
@@ -143,22 +215,15 @@ export default function PausedOrders(props: PausedOrdersProps) {
                 </Button>
               </Box>
             </Box>
-          );
-        })}
-
-        {!pausedOrders ||
-          (pausedOrders.length === 0 && (
-            <Box
-              display={"flex"}
-              flexDirection={"row"}
-              justifyContent={"center"}
-            >
-              <img
-                src={"/icons/noimage-list.svg"}
-                style={{ width: 300, height: 300 }}
-              />
-            </Box>
-          ))}
+          ))
+        ) : (
+          <Box display={"flex"} justifyContent={"center"}>
+            <img
+              src={"/icons/noimage-list.svg"}
+              style={{ width: 300, height: 300 }}
+            />
+          </Box>
+        )}
       </Stack>
     </TabPanel>
   );

@@ -250,7 +250,8 @@ export default function Products(props: ProductsProps) {
                 products.map((product: Product) => {
                   const date = new Date(product.createdAt);
                   const isSoldOut =
-                    product.productStatus === ProductStatus.SOLDOUT;
+                    product.productStatus === ProductStatus.SOLDOUT ||
+                    product.productLeftCount === 0;
                   const formatted = date.toLocaleString("uz-UZ", {
                     year: "numeric",
                     month: "numeric",
@@ -323,6 +324,7 @@ export default function Products(props: ProductsProps) {
                                   price: product.productPrice,
                                   image: product.productImages[0],
                                 });
+
                                 e.stopPropagation();
                               }
                             }}
@@ -354,6 +356,17 @@ export default function Products(props: ProductsProps) {
                               textColor="text.primary"
                               sx={{ fontWeight: "lg" }}
                             >
+                              Product Count: {product.productLeftCount}
+                            </Link>{" "}
+                          </Typography>
+
+                          <Typography sx={{ fontSize: "sm" }}>
+                            <Link
+                              component="button"
+                              color="neutral"
+                              textColor="text.primary"
+                              sx={{ fontWeight: "lg" }}
+                            >
                               {product.productName}:
                             </Link>{" "}
                             {product.productDesc}
@@ -375,6 +388,7 @@ export default function Products(props: ProductsProps) {
                             </Link>{" "}
                             {product.productPrice}$
                           </Typography>
+
                           <Link
                             component="button"
                             underline="none"
